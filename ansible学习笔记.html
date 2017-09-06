@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>ansible学习笔记</title>
-<!-- 2017-09-06 周三 23:53 -->
+<!-- 2017-09-06 周三 23:59 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="朱捷文" />
@@ -157,7 +157,6 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1">ansible与saltstack对照表</h2>
 <div class="outline-text-2" id="text-1">
@@ -478,7 +477,7 @@ playbook可以看做是一个YAML格式的配置文件，每个playbook由一个
 </p>
 
 <p>
-我们来看一下上面那个示例，该playbook中只包含了一个play，当然如果有必要也可以包含多个play，那么下一个play仍然要以“- hosts: &#x2026;”开始，也就是说每个play都是一个组成playbook列表的列表元素。再来看一下play，每一个play都是一个字典，上面示例中的那个play字典包含了host, vars, remote<sub>user</sub>, tasks, handlers这几个常用的键，下面分别介绍一下：
+我们来看一下上面那个示例，该playbook中只包含了一个play，当然如果有必要也可以包含多个play，那么下一个play仍然要以“- hosts: &#x2026;”开始，也就是说每个play都是一个组成playbook列表的列表元素。再来看一下play，每一个play都是一个字典，上面示例中的那个play字典包含了host, vars, remote_user, tasks, handlers这几个常用的键，下面分别介绍一下：
 </p>
 
 <p>
@@ -486,11 +485,11 @@ playbook可以看做是一个YAML格式的配置文件，每个playbook由一个
 </p>
 
 <p>
-<b>vars</b>: 用来定义变量并为其赋值，在上例中变量http<sub>port被赋值为80，max</sub><sub>clients被赋值为200。可以在随后的playbook或模板文件（如上例中的</sub>/srv/httpd.j2）中通过jinja语法来引用
+<b>vars</b>: 用来定义变量并为其赋值，在上例中变量http_port被赋值为80，max_clients被赋值为200。可以在随后的playbook或模板文件（如上例中的/srv/httpd.j2）中通过jinja语法来引用
 </p>
 
 <p>
-<b>remote<sub>user</sub></b>: 远程主机上执行task时所用的用户名
+<b>remote_user</b>: 远程主机上执行task时所用的用户名
 </p>
 
 <p>
@@ -511,7 +510,7 @@ playbook可以看做是一个YAML格式的配置文件，每个playbook由一个
 </p>
 
 <p>
-<b>handlers</b>: 它需要与notify结合使用。handlers只“定义”了被触发时去执行的操作，而对于这些handlers何时会被触发，是通过notify来指定的。也就是说只有当带有notify的模块返回的执行结果changed为true时，才会触发handlers中的操作。用上面例子来看，只有当src与dest所指定的文件内容不同时，template模块才会更新远程主机的/etc/httpd.conf文件，并返回changed为true，才会触发apache服务重启，否则返回changed为false且apache不会被重启。在测试过程中也可以强制设置changed<sub>when</sub>: true。handlers下的name不能省略，因为notify是通过该name来引用特定的handler的。另外，还有一点非常重要，handlers中的操作是play中最后执行的，而且如果某个play中有多个task带有notify，且这些notify都引用同一个handler，那么只要这些带notify的task中有一个执行成功，就会在该play中的所有task成功执行后，触发这个handler操作。
+<b>handlers</b>: 它需要与notify结合使用。handlers只“定义”了被触发时去执行的操作，而对于这些handlers何时会被触发，是通过notify来指定的。也就是说只有当带有notify的模块返回的执行结果changed为true时，才会触发handlers中的操作。用上面例子来看，只有当src与dest所指定的文件内容不同时，template模块才会更新远程主机的/etc/httpd.conf文件，并返回changed为true，才会触发apache服务重启，否则返回changed为false且apache不会被重启。在测试过程中也可以强制设置changed_when: true。handlers下的name不能省略，因为notify是通过该name来引用特定的handler的。另外，还有一点非常重要，handlers中的操作是play中最后执行的，而且如果某个play中有多个task带有notify，且这些notify都引用同一个handler，那么只要这些带notify的task中有一个执行成功，就会在该play中的所有task成功执行后，触发这个handler操作。
 </p>
 
 <p>
@@ -577,51 +576,51 @@ ad-hoc
 <tbody>
 <tr>
 <td class="left">&#xa0;</td>
-<td class="left">ansible<sub>ssh</sub><sub>port</sub>=</td>
+<td class="left">ansible_ssh_port=</td>
 <td class="left">&#xa0;</td>
-<td class="left">remote<sub>port</sub>=</td>
+<td class="left">remote_port=</td>
 </tr>
 
 <tr>
-<td class="left">-u REMOTE<sub>USER</sub>, &#x2013;user=</td>
-<td class="left">ansible<sub>ssh</sub><sub>user</sub>=</td>
-<td class="left">remote<sub>user</sub>:</td>
-<td class="left">remote<sub>user</sub>=</td>
+<td class="left">-u REMOTE_USER, &#x2013;user=</td>
+<td class="left">ansible_ssh_user=</td>
+<td class="left">remote_user:</td>
+<td class="left">remote_user=</td>
 </tr>
 
 <tr>
 <td class="left">-k, &#x2013;ask-pass</td>
-<td class="left">ansible<sub>ssh</sub><sub>pass</sub>=</td>
+<td class="left">ansible_ssh_pass=</td>
 <td class="left">&#xa0;</td>
-<td class="left">ask<sub>pass</sub>=</td>
+<td class="left">ask_pass=</td>
 </tr>
 
 <tr>
 <td class="left">-b, &#x2013;become</td>
-<td class="left">ansible<sub>become</sub>=true/yes</td>
+<td class="left">ansible_become=true/yes</td>
 <td class="left">become: true/yes</td>
 <td class="left">become=true/yes</td>
 </tr>
 
 <tr>
 <td class="left">&#x2013;become-method=</td>
-<td class="left">ansible<sub>become</sub><sub>method</sub>=</td>
-<td class="left">become<sub>method</sub>:</td>
-<td class="left">become<sub>method</sub>=</td>
+<td class="left">ansible_become_method=</td>
+<td class="left">become_method:</td>
+<td class="left">become_method=</td>
 </tr>
 
 <tr>
 <td class="left">&#x2013;become-user=</td>
-<td class="left">ansible<sub>become</sub><sub>user</sub>=</td>
-<td class="left">become<sub>user</sub>:</td>
-<td class="left">become<sub>user</sub>=</td>
+<td class="left">ansible_become_user=</td>
+<td class="left">become_user:</td>
+<td class="left">become_user=</td>
 </tr>
 
 <tr>
 <td class="left">-K, &#x2013;ask-become-pass</td>
-<td class="left">ansible<sub>become</sub><sub>pass</sub>=</td>
+<td class="left">ansible_become_pass=</td>
 <td class="left">&#xa0;</td>
-<td class="left">become<sub>ask</sub><sub>pass</sub>=</td>
+<td class="left">become_ask_pass=</td>
 </tr>
 
 <tr>
