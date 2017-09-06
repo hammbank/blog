@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>ansible学习笔记</title>
-<!-- 2017-09-06 周三 23:44 -->
+<!-- 2017-09-06 周三 23:53 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="朱捷文" />
@@ -478,7 +478,7 @@ playbook可以看做是一个YAML格式的配置文件，每个playbook由一个
 </p>
 
 <p>
-我们来看一下上面那个示例，该playbook中只包含了一个play，当然如果有必要也可以包含多个play，那么下一个play仍然要以“- hosts: &#x2026;”开始，也就是说每个play都是一个组成playbook列表的列表元素。再来看一下play，每一个play都是一个字典，上面示例中的那个play字典包含了host, vars, remote\<sub>user</sub>, tasks, handlers这几个常用的键，下面分别介绍一下：
+我们来看一下上面那个示例，该playbook中只包含了一个play，当然如果有必要也可以包含多个play，那么下一个play仍然要以“- hosts: &#x2026;”开始，也就是说每个play都是一个组成playbook列表的列表元素。再来看一下play，每一个play都是一个字典，上面示例中的那个play字典包含了host, vars, remote<sub>user</sub>, tasks, handlers这几个常用的键，下面分别介绍一下：
 </p>
 
 <p>
@@ -486,11 +486,11 @@ playbook可以看做是一个YAML格式的配置文件，每个playbook由一个
 </p>
 
 <p>
-<b>vars</b>: 用来定义变量并为其赋值，在上例中变量http\<sub>port被赋值为80，max\</sub><sub>clients被赋值为200。可以在随后的playbook或模板文件（如上例中的</sub>/srv/httpd.j2）中通过jinja语法来引用
+<b>vars</b>: 用来定义变量并为其赋值，在上例中变量http<sub>port被赋值为80，max</sub><sub>clients被赋值为200。可以在随后的playbook或模板文件（如上例中的</sub>/srv/httpd.j2）中通过jinja语法来引用
 </p>
 
 <p>
-<b>remote\<sub>user</sub></b>: 远程主机上执行task时所用的用户名
+<b>remote<sub>user</sub></b>: 远程主机上执行task时所用的用户名
 </p>
 
 <p>
@@ -577,51 +577,51 @@ ad-hoc
 <tbody>
 <tr>
 <td class="left">&#xa0;</td>
-<td class="left">ansible\<sub>ssh\</sub><sub>port</sub>=</td>
+<td class="left">ansible<sub>ssh</sub><sub>port</sub>=</td>
 <td class="left">&#xa0;</td>
-<td class="left">remote\<sub>port</sub>=</td>
+<td class="left">remote<sub>port</sub>=</td>
 </tr>
 
 <tr>
-<td class="left">-u REMOTE\<sub>USER</sub>, &#x2013;user=</td>
-<td class="left">ansible\<sub>ssh\</sub><sub>user</sub>=</td>
-<td class="left">remote\<sub>user</sub>:</td>
-<td class="left">remote\<sub>user</sub>=</td>
+<td class="left">-u REMOTE<sub>USER</sub>, &#x2013;user=</td>
+<td class="left">ansible<sub>ssh</sub><sub>user</sub>=</td>
+<td class="left">remote<sub>user</sub>:</td>
+<td class="left">remote<sub>user</sub>=</td>
 </tr>
 
 <tr>
 <td class="left">-k, &#x2013;ask-pass</td>
-<td class="left">ansible\<sub>ssh\</sub><sub>pass</sub>=</td>
+<td class="left">ansible<sub>ssh</sub><sub>pass</sub>=</td>
 <td class="left">&#xa0;</td>
-<td class="left">ask\<sub>pass</sub>=</td>
+<td class="left">ask<sub>pass</sub>=</td>
 </tr>
 
 <tr>
 <td class="left">-b, &#x2013;become</td>
-<td class="left">ansible\<sub>become</sub>=true/yes</td>
+<td class="left">ansible<sub>become</sub>=true/yes</td>
 <td class="left">become: true/yes</td>
 <td class="left">become=true/yes</td>
 </tr>
 
 <tr>
 <td class="left">&#x2013;become-method=</td>
-<td class="left">ansible\<sub>become\</sub><sub>method</sub>=</td>
-<td class="left">become\<sub>method</sub>:</td>
-<td class="left">become\<sub>method</sub>=</td>
+<td class="left">ansible<sub>become</sub><sub>method</sub>=</td>
+<td class="left">become<sub>method</sub>:</td>
+<td class="left">become<sub>method</sub>=</td>
 </tr>
 
 <tr>
 <td class="left">&#x2013;become-user=</td>
-<td class="left">ansible\<sub>become\</sub><sub>user</sub>=</td>
-<td class="left">become\<sub>user</sub>:</td>
-<td class="left">become\<sub>user</sub>=</td>
+<td class="left">ansible<sub>become</sub><sub>user</sub>=</td>
+<td class="left">become<sub>user</sub>:</td>
+<td class="left">become<sub>user</sub>=</td>
 </tr>
 
 <tr>
 <td class="left">-K, &#x2013;ask-become-pass</td>
-<td class="left">ansible\<sub>become\</sub><sub>pass</sub>=</td>
+<td class="left">ansible<sub>become</sub><sub>pass</sub>=</td>
 <td class="left">&#xa0;</td>
-<td class="left">become\<sub>ask\</sub><sub>pass</sub>=</td>
+<td class="left">become<sub>ask</sub><sub>pass</sub>=</td>
 </tr>
 
 <tr>
