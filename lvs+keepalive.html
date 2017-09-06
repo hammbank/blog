@@ -1,65 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>lvs+keepalive</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<meta name="title" content="lvs+keepalive"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2017-08-27T02:08+0800"/>
-<meta name="author" content=""/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
+<!-- 2017-09-06 周三 23:44 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
   .title  { text-align: center; }
-  .todo   { color: red; }
+  .todo   { font-family: monospace; color: red; }
   .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
-  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
-  .center {margin-left:auto; margin-right:auto; text-align:center;}
-  p.verse { margin-left: 3% }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
   pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
   }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top;  }
-  th.right  { text-align:center;  }
-  th.left   { text-align:center;   }
-  th.center { text-align:center; }
-  td.right  { text-align:right;  }
-  td.left   { text-align:left;   }
-  td.center { text-align:center; }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  div.inlinetask {
-    padding:10px;
-    border:2px solid gray;
-    margin:10px;
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
     background: #ffffcc;
   }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
   textarea { overflow-x: auto; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
-</style><link rel="stylesheet" type="text/css" href="css/worg.css"/>
+</style>
+<link rel="stylesheet" type="text/css" href="css/worg.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -106,18 +134,10 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-
 </head>
 <body>
-
-<div id="preamble">
-
-</div>
-
 <div id="content">
 <h1 class="title">lvs+keepalive</h1>
-
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -146,16 +166,14 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-
-<div id="outline-container-1" class="outline-2">
+<div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1">vrrp协议介绍</h2>
 <div class="outline-text-2" id="text-1">
-
-<p>vrrp分组格式：
+<p>
+vrrp分组格式：
 </p>
-
-
-<pre class="example"> 0                   1                   2                   3
+<pre class="example">
+ 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |Version| Type  | Virtual Rtr ID|   Priority    | Count IP Addrs|
@@ -175,13 +193,11 @@ for the JavaScript code in this tag.
 |                     Authentication Data (2)                   |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
-
 <p>
 vrrp状态转换图：
 </p>
-
-
-<pre class="example">                   +---------------+
+<pre class="example">
+                   +---------------+
         +---------&gt;|               |&lt;-------------+
         |          |  Initialize   |              |
         |   +------|               |----------+   |
@@ -194,65 +210,111 @@ vrrp状态转换图：
 |               |&lt;----------------------|               |
 +---------------+                       +---------------+
 </pre>
-
-
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-2" class="outline-2">
+<div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">lvs+keepalived实验环境</h2>
 <div class="outline-text-2" id="text-2">
+<p>
+我们的实验环境由4台服务器组成，2台负载均衡器/转发器（director），2台真实服务器（real server）：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
-<p>我们的实验环境由4台服务器组成，2台负载均衡器/转发器（director），2台真实服务器（real server）：
-</p><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<colgroup><col class="left" /></colgroup>
-<colgroup><col class="left" /></colgroup>
-<colgroup><col class="left" />
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+
+<colgroup>
+<col  class="right" />
+</colgroup>
+
+<colgroup>
+<col  class="left" />
 </colgroup>
 <thead>
-<tr><th scope="col" class="left">角色</th><th scope="col" class="left">ip地址</th><th scope="col" class="left">操作</th></tr>
+<tr>
+<th scope="col" class="left">角色</th>
+<th scope="col" class="right">ip地址</th>
+<th scope="col" class="left">操作</th>
+</tr>
 </thead>
 <tbody>
-<tr><td class="left">director 1</td><td class="left">192.168.220.31</td><td class="left">ipvsadm +</td></tr>
-<tr><td class="left">(MASTER)</td><td class="left"></td><td class="left">keepalived</td></tr>
+<tr>
+<td class="left">director 1</td>
+<td class="right">192.168.220.31</td>
+<td class="left">ipvsadm +</td>
+</tr>
+
+<tr>
+<td class="left">(MASTER)</td>
+<td class="right">&#xa0;</td>
+<td class="left">keepalived</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">director 2</td><td class="left">192.168.220.32</td><td class="left">ipvsadm +</td></tr>
-<tr><td class="left">(BACKUP)</td><td class="left"></td><td class="left">keepalived</td></tr>
+<tr>
+<td class="left">director 2</td>
+<td class="right">192.168.220.32</td>
+<td class="left">ipvsadm +</td>
+</tr>
+
+<tr>
+<td class="left">(BACKUP)</td>
+<td class="right">&#xa0;</td>
+<td class="left">keepalived</td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">real server 1</td><td class="left">192.168.220.33</td><td class="left">nginx +</td></tr>
-<tr><td class="left"></td><td class="left"></td><td class="left">lvs_real脚本</td></tr>
+<tr>
+<td class="left">real server 1</td>
+<td class="right">192.168.220.33</td>
+<td class="left">nginx +</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">lvs\<sub>real脚本</sub></td>
+</tr>
 </tbody>
 <tbody>
-<tr><td class="left">real server 2</td><td class="left">192.168.220.34</td><td class="left">nginx +</td></tr>
-<tr><td class="left"></td><td class="left"></td><td class="left">lvs_real脚本</td></tr>
+<tr>
+<td class="left">real server 2</td>
+<td class="right">192.168.220.34</td>
+<td class="left">nginx +</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">lvs\<sub>real脚本</sub></td>
+</tr>
 </tbody>
 </table>
-
 
 
 <p>
 另外，192.168.220.30作为我们的虚拟ip（vip）地址
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-3" class="outline-2">
+<div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">real servers的搭建</h2>
 <div class="outline-text-2" id="text-3">
-
-<p>real server（有些文档中也称为lvs客户端），指负载均衡器/转发器（director）后面提供服务的真实机器。负载均衡类型（lb_kind）一般分直接路由模式DR，网络地址转换模式NAT，以及隧道模式TUN三种。不管采取哪一种模式，real server上都不需安装额外的软件。real server的配置是根据其所采用的负载均衡种类(lb_kind)来做相应操作的。在我们的应用环境里，为了获得最高的性能，采用的负载均衡种类(lb_kind)是直接路由模式DR。
+<p>
+real server（有些文档中也称为lvs客户端），指负载均衡器/转发器（director）后面提供服务的真实机器。负载均衡类型（lb\<sub>kind）一般分直接路由模式DR，网络地址转换模式NAT，以及隧道模式TUN三种。不管采取哪一种模式，real</sub> server上都不需安装额外的软件。real server的配置是根据其所采用的负载均衡种类(lb\<sub>kind</sub>)来做相应操作的。在我们的应用环境里，为了获得最高的性能，采用的负载均衡种类(lb\<sub>kind</sub>)是直接路由模式DR。
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">vi /usr/local/bin/lvs_real
 </pre>
+</div>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh"><span style="color: #b22222;">#</span><span style="color: #b22222;">!/bin/</span><span style="color: #a020f0;">bash</span>
 <span style="color: #b22222;">#</span><span style="color: #b22222;">description : start realserver</span>
@@ -280,31 +342,32 @@ stop)
 <span style="color: #a020f0;">exit</span> 1
 <span style="color: #a020f0;">esac</span>
 </pre>
+</div>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">chmod +x /usr/local/bin/lvs_real
 </pre>
-
+</div>
 
 <p>
 启动和停止real server上的vip，可以通过脚本的start和stop这两个参数来控制。首先，我们来启动配置脚本：
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-sh">/usr/local/bin/lvs_real start
 </pre>
-
+</div>
 
 <p>
 我们来验证一下real server配置是否正确：
 </p>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">ip addr
 </pre>
-
+</div>
 
 <pre>
 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue 
@@ -325,66 +388,61 @@ stop)
 <p>
 从输出可以看出，lo0:0已绑定了我们指定的vip地址。
 </p>
+
 <p>
 而当我们需要卸载已绑定的vip时，执行下面命令：
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-sh">/usr/local/bin/lvs_real stop
 </pre>
-
+</div>
 
 <p>
 两台realserver的lvs<sub>real脚本完全相同，所以另一台lvs</sub><sub>real脚本只需简单的复制黏贴过去就可以了，这里就不再重复。</sub>
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-4" class="outline-2">
+<div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4">lvs directors的搭建</h2>
 <div class="outline-text-2" id="text-4">
-
-
-</div>
-
-<div id="outline-container-4-1" class="outline-3">
+</div><div id="outline-container-sec-4-1" class="outline-3">
 <h3 id="sec-4-1">keepalived的安装</h3>
 <div class="outline-text-3" id="text-4-1">
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-sh">yum install ipvsadm
 </pre>
+</div>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">curl -O http://www.keepalived.org/software/keepalived-1.2.19.tar.gz
 tar zxvf keepalived-1.2.19.tar.gz
 <span style="color: #483d8b;">cd</span> keepalived-1.2.19
 ./configure --sysconf=/etc/
 </pre>
-
+</div>
 
 <p>
-在./configure时加&ndash;sysconf=/etc/的好处是，安装完成后服务启动脚本会被复制到/etc/init.d/下，以后可以直接通过service命令来启动或停止，另外，配置文件keepalived.conf会被放在/etc/keepalived/下。
-</p>
-<p>
-如果是rhel5，可能会在./configure时报错： <code>configure: error: No SO_MARK declaration in headers</code> ，可以通过增加 <code>--disable-fwmark</code> 选项来解决：
+在./configure时加&#x2013;sysconf=/etc/的好处是，安装完成后服务启动脚本会被复制到/etc/init.d/下，以后可以直接通过service命令来启动或停止，另外，配置文件keepalived.conf会被放在/etc/keepalived/下。
 </p>
 
+<p>
+如果是rhel5，可能会在./configure时报错： <code>configure: error: No SO\_MARK declaration in headers</code> ，可以通过增加 <code>--disable-fwmark</code> 选项来解决：
+</p>
+<div class="org-src-container">
 
 <pre class="src src-sh">./configure --sysconf=/etc/ --disable-fwmark
 </pre>
-
+</div>
 
 <p>
 如果configure 操作能正常进行，运行完毕后将有如下的汇总输出：
 </p>
-
-
-<pre class="example">Keepalived configuration
+<pre class="example">
+Keepalived configuration
 ------------------------
 Keepalived version       : 1.2.19
 Compiler                 : gcc
@@ -401,41 +459,37 @@ SHA1 support             : No
 Use Debug flags          : No
 </pre>
 
-
 <p>
 编译并安装：
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-sh">make
 make install
 ln -s /usr/local/sbin/keepalived /sbin/
 </pre>
-
-
+</div>
+</div>
 </div>
 
-</div>
-
-<div id="outline-container-4-2" class="outline-3">
+<div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2">keepalived的配置</h3>
 <div class="outline-text-3" id="text-4-2">
-
-
 <p>
 一个功能比较完整的keepalived 的配置文件，其配置文件keepalived.conf可以包含三个文本块：全局定义块、VRRP 实例定义块及虚拟服务器定义块。全局定义块和虚拟服务器定义块是必须的，如果在只有一个负载均衡器的场合，就不须VRRP实例定义块。
 </p>
+
 <p>
 下面是我们的director Master上的配置：
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-sh">vi /etc/keepalived/keepalived.conf
 </pre>
+</div>
 
-
-
-<pre class="example">! Configuration File for keepalived
+<pre class="example">
+! Configuration File for keepalived
 
 global_defs {
    router_id LVS_DEVEL_1
@@ -483,49 +537,48 @@ virtual_server 192.168.220.30 80 {
         }
     }
 }
-
 </pre>
-
 <p>
-在我们这个实验环境里只有一个vrrp实例（vrrp_instance），所以主负载均衡器(MASTER)与备份负载均衡器（BACKUP）配置文件差异一共只有3处: 
-</p><ul>
-<li><code>route_id LVS_DEVEL_2</code> 
+在我们这个实验环境里只有一个vrrp实例（vrrp\<sub>instance），所以主负载均衡器</sub>(MASTER)与备份负载均衡器（BACKUP）配置文件差异一共只有3处: 
+</p>
+<ul class="org-ul">
+<li><code>route\_id LVS\_DEVEL\_2</code> 
 </li>
 <li><code>state BACKUP</code> 
 </li>
 <li><code>priority 80</code>
 </li>
 </ul>
-
-<p>所以备份负载均很器的keepalived.conf配置不再另外贴出。
+<p>
+所以备份负载均很器的keepalived.conf配置不再另外贴出。
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-5" class="outline-2">
+<div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5">keepalived的作用</h2>
 <div class="outline-text-2" id="text-5">
-
-<p>我们知道lvs的作用只是负载均衡，自身不具备高可用性。lvs+keepalived目的就是为了让本身不具备高可用的lvs达到高可用。keepalived主要通过两方面来实现：
-</p><ul>
+<p>
+我们知道lvs的作用只是负载均衡，自身不具备高可用性。lvs+keepalived目的就是为了让本身不具备高可用的lvs达到高可用。keepalived主要通过两方面来实现：
+</p>
+<ul class="org-ul">
 <li>故障切换（failover）
 </li>
 <li>健康检查（healthcheck）
 </li>
 </ul>
-
-<p>下边就直接通过简单的例子分别来介绍。但在这之前先启动我们的高可用负载均衡集群（real servers上启动nginx和lvs<sub>real脚本，lvs</sub> directors上启动keepalived）。
+<p>
+下边就直接通过简单的例子分别来介绍。但在这之前先启动我们的高可用负载均衡集群（real servers上启动nginx和lvs<sub>real脚本，lvs</sub> directors上启动keepalived）。
 </p>
-
 </div>
 
-<div id="outline-container-5-1" class="outline-3">
+<div id="outline-container-sec-5-1" class="outline-3">
 <h3 id="sec-5-1">keepalived的故障切换（failover）</h3>
 <div class="outline-text-3" id="text-5-1">
-
-<p>director 1（192.168.220.31）和director 2（192.168.220.32）正常工作时的状态：
+<p>
+director 1（192.168.220.31）和director 2（192.168.220.32）正常工作时的状态：
+</p>
 <pre>
 [root@<font color="red">31</font> ~]# ip addr
 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 16436 qdisc noqueue 
@@ -559,14 +612,13 @@ virtual_server 192.168.220.30 80 {
     link/sit 0.0.0.0 brd 0.0.0.0
 </pre>
 
+<p>
 我们通过关闭director 1（192.168.220.31）上的keepalived服务来模拟故障：
 </p>
 
-
-
-<pre class="example">service keepalived stop
+<pre class="example">
+service keepalived stop
 </pre>
-
 
 <pre>
 [root@<font color="red">31</font> ~]# ip addr
@@ -605,22 +657,22 @@ virtual_server 192.168.220.30 80 {
 可以看到，当director 1（192.168.220.31）产生故障时，虚拟ip（192.168.220.30）被成功的切换到director 2（192.168.220.32）上了
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-5-2" class="outline-3">
+<div id="outline-container-sec-5-2" class="outline-3">
 <h3 id="sec-5-2">keepalived的健康检查（healthcheck）</h3>
 <div class="outline-text-3" id="text-5-2">
-
-<p>我们接着刚才的例子，再在director 2（192.168.220.32）上执行:
+<p>
+我们接着刚才的例子，再在director 2（192.168.220.32）上执行:
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-sh">ipvsadm -ln
 </pre>
-
+</div>
 <p>
 可以看到，如果2台real server的状态都正常，都应该出现在lvs的pool列表中：
+</p>
 <pre>
 [root@32 ~]# ipvsadm -ln
 IP Virtual Server version 1.2.1 (size=4096)
@@ -631,13 +683,14 @@ TCP  192.168.220.30:80 rr
   -> <font color="red">192.168.220.33:80</font>            Route   100    0          0         
 </pre>
 
+<p>
 现在，我们通过停止real server 1（192.168.220.33）的nginx服务来模拟故障
 </p>
-
+<div class="org-src-container">
 
 <pre class="src src-sh">/opt/nginx/sbin/nginx -s stop
 </pre>
-
+</div>
 
 <pre>
 [root@32 ~]# ipvsadm -ln
@@ -653,36 +706,29 @@ TCP  192.168.220.30:80 rr
 </p>
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-6" class="outline-2">
+<div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6">其他（未完成）</h2>
 <div class="outline-text-2" id="text-6">
-
-
-</div>
-
-<div id="outline-container-6-1" class="outline-3">
+</div><div id="outline-container-sec-6-1" class="outline-3">
 <h3 id="sec-6-1">关于vrrp协议中的定时器</h3>
 <div class="outline-text-3" id="text-6-1">
-
-
-
-
+<div class="org-src-container">
 
 <pre class="src src-sh">tcpdump -i eth0 vrrp
 </pre>
+</div>
 
-
+<div class="org-src-container">
 
 <pre class="src src-sh">iptables -A OUTPUT -p vrrp -d 224.0.0.18 -j DROP
 iptables -D OUTPUT -p vrrp -d 224.0.0.18 -j DROP
 </pre>
+</div>
 
-
-
-<pre class="example">10:42:35.701470 IP 192.168.220.31 &gt; 224.0.0.18: VRRPv2, Advertisement, vrid 51, prio 100, authtype simple, intvl 1s, length 20
+<pre class="example">
+10:42:35.701470 IP 192.168.220.31 &gt; 224.0.0.18: VRRPv2, Advertisement, vrid 51, prio 100, authtype simple, intvl 1s, length 20
 10:42:36.702518 IP 192.168.220.31 &gt; 224.0.0.18: VRRPv2, Advertisement, vrid 51, prio 100, authtype simple, intvl 1s, length 20
 10:42:37.703054 IP 192.168.220.31 &gt; 224.0.0.18: VRRPv2, Advertisement, vrid 51, prio 100, authtype simple, intvl 1s, length 20
 10:42:41.391585 IP 192.168.220.32 &gt; 224.0.0.18: VRRPv2, Advertisement, vrid 51, prio 80, authtype simple, intvl 1s, length 20
@@ -695,9 +741,8 @@ iptables -D OUTPUT -p vrrp -d 224.0.0.18 -j DROP
 10:42:45.400864 IP 192.168.220.31 &gt; 224.0.0.18: VRRPv2, Advertisement, vrid 51, prio 100, authtype simple, intvl 1s, length 20
 </pre>
 
-
-
-<pre class="example">41.391585 - 37.703054 = 3.688531
+<pre class="example">
+41.391585 - 37.703054 = 3.688531
 
 Skew_Time:
 ( (256 - Priority) / 256 )
@@ -707,18 +752,14 @@ Master_Down_Interval:
 
 3 * 1 + (256 - 80) / 256 = 3.6875
 </pre>
-
-
 </div>
 </div>
-
 </div>
 
-<div id="outline-container-7" class="outline-2">
+<div id="outline-container-sec-7" class="outline-2">
 <h2 id="sec-7">参考</h2>
 <div class="outline-text-2" id="text-7">
-
-<ul>
+<ul class="org-ul">
 <li><a href="http://www.keepalived.org/pdf/sery-lvs-cluster.pdf">http://www.keepalived.org/pdf/sery-lvs-cluster.pdf</a>
 </li>
 <li><a href="http://tools.ietf.org/html/rfc3768">http://tools.ietf.org/html/rfc3768</a>
@@ -726,10 +767,8 @@ Master_Down_Interval:
 <li><a href="http://tools.ietf.org/html/rfc5798">http://tools.ietf.org/html/rfc5798</a>
 </li>
 </ul>
-
 </div>
 </div>
 </div>
-
 </body>
 </html>
