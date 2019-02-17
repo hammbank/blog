@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>lvs+keepalive</title>
-<!-- 2017-09-07 周四 00:26 -->
+<!-- 2019-02-17 周日 12:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -157,12 +157,17 @@ for the JavaScript code in this tag.
 <li><a href="#sec-5-2">keepalived的健康检查（healthcheck）</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">其他（未完成）</a>
+<li><a href="#sec-6">keepalived的snmp配置</a></li>
+<li><a href="#sec-7">一个keepalived的最简配置的例子</a></li>
+<li><a href="#sec-8">active/passive的keepalived+nginx生产配置例子</a></li>
+<li><a href="#sec-9">配置邮件告警</a></li>
+<li><a href="#sec-10">其他（未完成）</a>
 <ul>
-<li><a href="#sec-6-1">关于vrrp协议中的定时器</a></li>
+<li><a href="#sec-10-1">关于vrrp协议中的定时器</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">参考</a></li>
+<li><a href="#sec-11">FAQ</a></li>
+<li><a href="#sec-12">参考</a></li>
 </ul>
 </div>
 </div>
@@ -709,11 +714,240 @@ TCP  192.168.220.30:80 rr
 </div>
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6">其他（未完成）</h2>
+<h2 id="sec-6">keepalived的snmp配置</h2>
 <div class="outline-text-2" id="text-6">
-</div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1">关于vrrp协议中的定时器</h3>
-<div class="outline-text-3" id="text-6-1">
+<p>
+启动keepalived时需要使用-x参数，比如使用CentOS6的系统需要修改/etc/sysconfig/keepalived文件，加入：
+</p>
+<pre class="example">
+KEEPALIVED_OPTIONS="-D -x"
+</pre>
+<p>
+或者
+</p>
+<pre class="example">
+keepalived -D -x
+</pre>
+<p>
+其中的-D为打印详细日志，日志默认存放于/var/log/messages文件中。
+在默认的snmpd.conf配置文件中加入下面这两行
+</p>
+<pre class="example">
+view    systemview    included   .1.3.6.1.4.1.9586.100.5
+master agentx
+</pre>
+<p>
+第一行设置视图，keepalived的OID为".1.3.6.1.4.1.9586.100.5"
+<a href="https://dsa.debian.org/iana/">https://dsa.debian.org/iana/</a>
+第二行为开启SNMP AgentX支持。
+要使keepalived支持snmp，需要在修改snmpd.conf配置文件后先重启snmpd，然后再重启keepalived才能生效。并且当停止keepalived服务后OID为".1.3.6.1.4.1.9586.100.5"下的所有信息都将被删除。
+另外，CentOS上keepalived的MIB位置：
+/usr/share/snmp/mibs/KEEPALIVED-MIB.txt
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">一个keepalived的最简配置的例子</h2>
+<div class="outline-text-2" id="text-7">
+<pre class="example">
+! Configuration File for keepalived
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth0
+    virtual_router_id 51
+    priority 150
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        192.168.220.30
+    }
+}
+</pre>
+<pre class="example">
+! Configuration File for keepalived
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 51
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    virtual_ipaddress {
+        192.168.220.30
+    }
+}
+</pre>
+<p>
+<a href="https://raymii.org/s/tutorials/Keepalived-Simple-IP-failover-on-Ubuntu.html">https://raymii.org/s/tutorials/Keepalived-Simple-IP-failover-on-Ubuntu.html</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">active/passive的keepalived+nginx生产配置例子</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+下面为一个生产上的keepalived+nginx实例的MASTER配置：
+</p>
+<pre class="example">
+! Configuration File for keepalived
+
+# keepalive的原理：
+# keepalived使用的是vrrp作为心跳包，心跳包只由MASTER角色进行发送，BACKUP角色接收心跳包，如果BACKUP角色连续3次未接收到MASTER发送的vrrp心跳包，BACKUP将自动切换为MASTER角色，同时为配置文件virtual_ipaddress段中所指定的网卡绑定指定的虚拟ip地址。
+# global_defs段内主要设置邮件通知信息
+global_defs {
+   # 通知邮件
+   notification_email {
+       alert1@localdomain.com
+       alert2@localdomain.com
+   }
+    # 发件人地址
+    notification_email_from slb_60_206_13_31@mail.nineyou
+    # smtp服务器地址
+    smtp_server 127.0.0.1
+    smtp_connect_timeout 30
+    # 会列出在邮件主题中，master和backup的router_id可以相同可以不同，这里设为不同的，用于区分邮件发送者
+    router_id slb_60_206_13_31
+}
+
+# track_script配置的脚本，此处可以是任何shell命令或者脚本，每间隔interval秒运行一次。如果连续返回fall次非0值，那么角色将转变为FAULT状态，同时移除原先已绑定的虚拟ip。如果连续返回rise次0值，那么角色即退出FAULT状态，而具体是MASTER还是BACKUP会根据prioity的值来决定。
+vrrp_script check_nginx {
+    script "&lt;/dev/tcp/0.0.0.0/80"
+    interval 4
+    fall 2
+    rise 1
+}
+
+vrrp_instance VIP_60_206_13_130 {
+    # 角色的初始状态，不是很重要，主要看priority
+    state MASTER
+    # interface必须是绑定mcast_src_ip的网卡接口，如果在不同的接口上，可能会出现master发送的vrrp心跳包被backup丢弃的情况，这样backup也会提升为master，出现1个虚拟ip被同时绑定在两台主机上的情况。
+    interface eth1
+    # 同一个vrrp_instance的virtual_router_id必须相同，该值出现在vrrp心跳包中，tcpdump -ennnvvvi eth1 vrrp显示为vrid字段
+    virtual_router_id 130
+    # priority高者为master，建议master和backup之差在50以上
+    priority 150
+    # 开启邮件告警
+    smtp_alert
+    # 每隔3秒发送一次vrrp心跳包，默认是1秒，只有master会发送vrrp心跳包
+    advert_int 3
+    # 指定发送vrrp数据包的源ip地址
+    mcast_src_ip 192.168.1.31
+    # 需要监控的接口，列出的任何接口挂掉后，会切换到FAULT状态
+    track_interface {
+        eth0
+        eth1
+    }
+    # 身份认证
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    # 设置监控脚本名称，见vrrp_script配置段
+    track_script {
+        check_nginx
+    }
+    # 设置需要绑定的虚拟ip和网卡接口，虚拟ip一般在master和backup上配置相同ip地址，配置dev网卡接口时注意使用在虚拟ip对应的网段内的网卡接口。另，virtual_ipaddress中的ip地址可以配置多个，每个一行。
+    virtual_ipaddress {
+        60.206.13.130/24 brd 60.206.13.255 dev eth0
+    }
+}
+</pre>
+<p>
+BACKUP配置：
+</p>
+<pre class="example">
+! Configuration File for keepalived
+
+global_defs {
+   notification_email {
+       alert1@localdomain.com
+       alert2@localdomain.com
+   }
+    # 不同于MASTER
+    notification_email_from slb_60_206_13_32@mail.nineyou
+    smtp_server 127.0.0.1
+    smtp_connect_timeout 30
+   # 不同于MASTER
+    router_id slb_60_206_13_32
+}
+
+vrrp_script check_nginx {
+    script "&lt;/dev/tcp/0.0.0.0/80"
+    interval 4
+    fall 2
+    rise 1
+}
+
+vrrp_instance VIP_60_206_13_130 {
+    # 不同于MASTER
+    state BACKUP
+    # 可能不同于MASTER
+    interface eth1
+    virtual_router_id 130
+    # 不同于MASTER
+    priority 100
+    smtp_alert
+    advert_int 3
+    # 不同于MASTER
+    mcast_src_ip 192.168.1.32
+    # 可能不同于MASTER
+    track_interface {
+        eth0
+        eth1
+    }
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    track_script {
+        check_nginx
+    }
+    # 可能不同于MASTER
+    virtual_ipaddress {
+        60.206.13.130/24  brd 60.206.13.255 dev eth0
+    }
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9">配置邮件告警</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+需要增加下面两段配置：
+</p>
+<pre class="example">
+global_defs {
+     notification_email {
+         root@localhost.localdomain
+     }
+     notification_email_from keepalive01@localhost.localdomain
+     smtp_server 127.0.0.1
+     smtp_connect_timeout 30
+     router_id keepalive01
+}
+</pre>
+<pre class="example">
+vrrp_instance VI_1 {
+    smtp_alert
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10">其他（未完成）</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1">关于vrrp协议中的定时器</h3>
+<div class="outline-text-3" id="text-10-1">
 <div class="org-src-container">
 
 <pre class="src src-sh">tcpdump -i eth0 vrrp
@@ -756,9 +990,18 @@ Master_Down_Interval:
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7">参考</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11">FAQ</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+Q: ip a查看到没有绑定VIP，日志/var/log/messages显示Keepalived<sub>vrrp[xxxx]</sub>: VRRP<sub>Instance</sub>(xxxxxx) Now in FAULT state，截取多播接口tcpdump -i eth1 vrrp没有vrrp数据包。
+A: 可能是keepalvied配置中设置有vrrp<sub>script，脚本检测未通过。</sub>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12">参考</h2>
+<div class="outline-text-2" id="text-12">
 <ul class="org-ul">
 <li><a href="http://www.keepalived.org/pdf/sery-lvs-cluster.pdf">http://www.keepalived.org/pdf/sery-lvs-cluster.pdf</a>
 </li>
