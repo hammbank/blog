@@ -3,12 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-01 周一 23:37 -->
+<!-- 2021-03-01 周一 17:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>使用mailx和openssl发送邮件</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="朱捷文" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -240,236 +239,230 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">使用mailx和openssl发送邮件</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org000eb09">使用mailx发送邮件</a></li>
-<li><a href="#orgec8b65e">使用openssl发送加密邮件</a></li>
-<li><a href="#org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</a></li>
-<li><a href="#orgd06bd4a">参考</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org000eb09" class="outline-2">
-<h2 id="org000eb09">使用mailx发送邮件</h2>
-<div class="outline-text-2" id="text-org000eb09">
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-
 <p>
-使用sendmail发送指定from name的邮件：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com -- -f "fromname" &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-<p>
-注意，其中的-f为传递给sendmail的参数。CentOS7上更好的方法是使用mailx的-r参数。
+一、描述windows本地开发环境如何配置？并完成配置
 </p>
 
 <p>
-mailx配置remote smtp作为MTA，在mailx的配置文件/etc/mail.rc最后增加：
-</p>
-<pre class="example">
-set from=account@example.com
-set smtp=111.111.111.111
-set smtp-auth-user=account@example.com
-set smtp-auth-password=123456
-set smtp-auth=login
-</pre>
-<p>
-set smtp除了ip也可以是A记录域名，由于是A记录也可以通过/etc/hosts来绑定域名ip。
-</p>
-</div>
-</div>
-<div id="outline-container-orgec8b65e" class="outline-2">
-<h2 id="orgec8b65e">使用openssl发送加密邮件</h2>
-<div class="outline-text-2" id="text-orgec8b65e">
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet
-</pre>
-</div>
-<ul class="org-ul">
-<li>openssl用于以ssl方式登录发送邮件，默认端口465。</li>
-<li>-crlf把LF转换为CR+LF，某些SMTP服务实现必须以CR+LF作为行标识符，才可以识别SMTP命令。</li>
-<li>-quiet用来禁止打印会话和证书信息，而且-quiet蕴涵了-ign_eof。如果不加-quiet或-ign_eof参数，openssl会把以B，R，Q为起始符的行作为命令来看待。下面是openssl s_client的manpage：</li>
-</ul>
-<pre class="example">
-CONNECTED COMMANDS
-       If a connection is established with an SSL server then any data received from the server is displayed and any key presses will be sent to the server. When used interactively (which means neither -quiet nor -ign_eof have been given), the session will be renegotiated if the line begins with an R, and if the line begins with a Q or if end of file is reached, the connection will be closed down.
-</pre>
-<p>
-&#x2026;
-220 mail.mycorp.com ESMTP EMOS V1.6 (Postfix)
-</p>
-<pre class="example">
-helo localhost
-</pre>
-<p>
-250 mail.mycorp.com
-</p>
-<pre class="example">
-auth login
-</pre>
-<p>
-334 VXNlcm5hbWU6
-</p>
-<pre class="example">
-VXNlcm5hbWU6即base64的Username:（echo -n 'VXNlcm5hbWU6'|base64 -d）
-填邮箱名，需要用echo -n 'xxxxxx@xxx.xxx.xxx'|base64转换
-</pre>
-<p>
-334 UGFzc3dvcmQ6
-</p>
-<pre class="example">
-UGFzc3dvcmQ6即base64的Password:（echo -n 'UGFzc3dvcmQ6'|base64 -d）
-填用邮箱密码，需要用echo -n 'password'|base64转换
-</pre>
-<p>
-235 2.7.0 Authentication successful
-</p>
-<pre class="example">
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.0 Ok
-</p>
-<pre class="example">
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.5 Ok
-</p>
-<pre class="example">
-data
-</pre>
-<p>
-354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
-</p>
-<pre class="example">
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-</pre>
-<p>
-250 2.0.0 Ok: queued as DD6D140F8C
-</p>
-<pre class="example">
-quit
-</pre>
-<p>
-221 2.0.0 Bye
+修改C:\Windows\System32\drivers\etc\hosts文件，增加：
 </p>
 
-<p>
-closed
-</p>
-
-<p>
-其中的Cc头字段表示抄送，而Date头字段好像并没有什么用，服务器会自动修改为当前日期。
-</p>
-
-<ul class="org-ul">
-<li>如果需要非交互方式下发送邮件，可以vi mymail.txt</li>
-</ul>
 <pre class="example">
-helo localhost
-auth login
-邮箱名
-邮箱密码
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-data
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-quit
-</pre>
-<p>
-注意，若&lt;xxxxxx@xxx.xxx&gt;中不包含空格，是可以省去尖括号的。
-最后
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet &lt; mymail.txt
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org68e1ced" class="outline-2">
-<h2 id="org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</h2>
-<div class="outline-text-2" id="text-org68e1ced">
-<p>
-在非阿里云主机上搭建一台smtp，额外开通2525端口：
-vi /etc/postfix/master.cf
-</p>
-<pre class="example">
-smtp      inet  n       -       n       -       -       smtpd
-# custom service-name
-smtp2      inet  n       -       n       -       -       smtpd
+192.168.111.131 node01.kaikeba.com node01
+192.168.111.132 node02.kaikeba.com node02
+192.168.111.133 node03.kaikeba.com node03
 </pre>
 
 <p>
-vi /etc/services
+安装jdk8：
 </p>
+
+<p>
+安装时需要注意安装路径不要带空格。安装完成后添加JAVA\<sub>HOME环境变量</sub>，然后PATH增加$JAVA<sub>HOME</sub>$/bin
+</p>
+
+<p>
+windows下hadoop环境配置：
+</p>
+
+<p>
+安装时需要注意安装路径不要带空格。安装完成后用课件中的bin覆盖，主要增加了winutils.exe和hadoop.dll，并把hadoop.dll复制到C:\Windows\System32下。然后添加HADOOP\<sub>HOME环境变量</sub>，增加$HADOOP<sub>HOME</sub>$/bin和$HADOOP<sub>HOME</sub>$/sbin。最后替换$HADOOP<sub>HOME</sub>$/bin和$HADOOP<sub>HOME</sub>$/sbin中的*.cmd文件的unix换行符，使之变为windows换行符。
+</p>
+
+<p>
+关于安装maven：
+</p>
+
+<p>
+由于当前最新版的idea集成maven3.6.3和maven插件，该步骤可以省略。
+</p>
+
+<p>
+安装idea（使用免费社区版）：
+</p>
+
+<p>
+一路下一步完成安装
+</p>
+
+<p>
+idea配置maven：
+</p>
+
+<p>
+由于上一步使用idea自带的maven，一般不需要额外配置。但为提升下载速度，可以添加maven的阿里云镜像，C:\Program Files\JetBrains\IntelliJ IDEA
+Community Edition 2020.2.4\plugins\maven\lib\maven3\conf\settings.xml：
+</p>
+
 <pre class="example">
-smtp            25/tcp          mail
-smtp            25/udp          mail
-smtp2           2525/tcp          mail2    # custom smtp prot
-smtp2           2525/udp          mail2    # custom smtp prot
+&lt;settings&gt;
+  &lt;mirrors&gt;
+    &lt;mirror&gt;
+      &lt;id&gt;aliyunmaven&lt;/id&gt;
+      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
+      &lt;name&gt;阿里云公共仓库&lt;/name&gt;
+      &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt;
+    &lt;/mirror&gt;
+  &lt;/mirrors&gt;
+&lt;/settings&gt;
 </pre>
-
-<div class="org-src-container">
-<pre class="src src-shell">service postfix reload
-</pre>
-</div>
 
 <p>
-最后修改阿里云主机的mailx配置文件，vi /etc/mail.rc，在末尾加入：
+二、在idea中，新建maven工程，编程实现创建hdfs的/kkb/目录；并上传文件a.txt到此目录：
 </p>
+
+<p>
+pom.xml中增加:
+</p>
+
 <pre class="example">
-set smtp=111.111.111.111:2525
+&lt;properties&gt;
+    &lt;hadoop.version&gt;3.1.4&lt;/hadoop.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-client&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-common&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-hdfs&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-mapreduce-client-core&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- https://mvnrepository.com/artifact/junit/junit --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;4.11&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.testng&lt;/groupId&gt;
+        &lt;artifactId&gt;testng&lt;/artifactId&gt;
+        &lt;version&gt;RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+        &lt;version&gt;1.2.17&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.0&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;1.8&lt;/source&gt;
+                &lt;target&gt;1.8&lt;/target&gt;
+                &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                &lt;!--   &lt;verbal&gt;true&lt;/verbal&gt;--&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.4.3&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;phase&gt;package&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;shade&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;minimizeJar&gt;true&lt;/minimizeJar&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
 </pre>
 
 <p>
-<a href="https://www.cnblogs.com/workdsz/articles/9335030.html">https://www.cnblogs.com/workdsz/articles/9335030.html</a>
-另一种方法是，使用nat端口转发：
-<a href="http://yo.zgserver.com/smtpredirect-2.html">http://yo.zgserver.com/smtpredirect-2.html</a>
+java代码：
 </p>
-</div>
-</div>
-<div id="outline-container-orgd06bd4a" class="outline-2">
-<h2 id="orgd06bd4a">参考</h2>
-<div class="outline-text-2" id="text-orgd06bd4a">
+
+<pre class="example">
+package com.kkb;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class HDFSDemo {
+    @Test
+    public void mkDirOnHDFS() throws IOException {
+        Configuration configuration = new Configuration();
+        configuration.set("fs.defaultFS", "hdfs://node01:8020");
+        FileSystem fileSystem = FileSystem.get(configuration);
+        boolean mkdirs = fileSystem.mkdirs(new Path("/kkb"));
+        fileSystem.close();
+    }
+
+    @Test
+    public void uploadFile() throws URISyntaxException, IOException, InterruptedException {
+        Configuration configuration = new Configuration();
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://node01:8020"),configuration,"hadoop");
+        fileSystem.copyFromLocalFile(new Path("file:///C:\\my_stuff\\kkb\\作业\\20201130\\3、数据\\smallfile\\a.txt"), new Path("/kkb"));
+        fileSystem.close();
+    }
+}
+</pre>
+
 <p>
-<a href="https://tools.ietf.org/html/rfc821">https://tools.ietf.org/html/rfc821</a><br />
-<a href="https://tools.ietf.org/html/rfc5321">https://tools.ietf.org/html/rfc5321</a><br />
-<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol</a>
+查看确认hdfs中的/kkb目录是否已创建和a.txt文件是否上传成功：
 </p>
-</div>
+
+
+<div class="figure">
+<p><img src="./2020113_HDFS分布式文件系统.assets/20201202101644.png" alt="20201202101644.png" />
+</p>
 </div>
 </div>
 </body>

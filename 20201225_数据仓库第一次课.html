@@ -6,9 +6,8 @@
 <!-- 2021-03-01 周一 23:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>使用mailx和openssl发送邮件</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="朱捷文" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -243,234 +242,171 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">使用mailx和openssl发送邮件</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org000eb09">使用mailx发送邮件</a></li>
-<li><a href="#orgec8b65e">使用openssl发送加密邮件</a></li>
-<li><a href="#org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</a></li>
-<li><a href="#orgd06bd4a">参考</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org000eb09" class="outline-2">
-<h2 id="org000eb09">使用mailx发送邮件</h2>
-<div class="outline-text-2" id="text-org000eb09">
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-
 <p>
-使用sendmail发送指定from name的邮件：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com -- -f "fromname" &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-<p>
-注意，其中的-f为传递给sendmail的参数。CentOS7上更好的方法是使用mailx的-r参数。
+1、常见的etl工具有（多选）：
 </p>
 
 <p>
-mailx配置remote smtp作为MTA，在mailx的配置文件/etc/mail.rc最后增加：
-</p>
-<pre class="example">
-set from=account@example.com
-set smtp=111.111.111.111
-set smtp-auth-user=account@example.com
-set smtp-auth-password=123456
-set smtp-auth=login
-</pre>
-<p>
-set smtp除了ip也可以是A记录域名，由于是A记录也可以通过/etc/hosts来绑定域名ip。
-</p>
-</div>
-</div>
-<div id="outline-container-orgec8b65e" class="outline-2">
-<h2 id="orgec8b65e">使用openssl发送加密邮件</h2>
-<div class="outline-text-2" id="text-orgec8b65e">
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet
-</pre>
-</div>
-<ul class="org-ul">
-<li>openssl用于以ssl方式登录发送邮件，默认端口465。</li>
-<li>-crlf把LF转换为CR+LF，某些SMTP服务实现必须以CR+LF作为行标识符，才可以识别SMTP命令。</li>
-<li>-quiet用来禁止打印会话和证书信息，而且-quiet蕴涵了-ign_eof。如果不加-quiet或-ign_eof参数，openssl会把以B，R，Q为起始符的行作为命令来看待。下面是openssl s_client的manpage：</li>
-</ul>
-<pre class="example">
-CONNECTED COMMANDS
-       If a connection is established with an SSL server then any data received from the server is displayed and any key presses will be sent to the server. When used interactively (which means neither -quiet nor -ign_eof have been given), the session will be renegotiated if the line begins with an R, and if the line begins with a Q or if end of file is reached, the connection will be closed down.
-</pre>
-<p>
-&#x2026;
-220 mail.mycorp.com ESMTP EMOS V1.6 (Postfix)
-</p>
-<pre class="example">
-helo localhost
-</pre>
-<p>
-250 mail.mycorp.com
-</p>
-<pre class="example">
-auth login
-</pre>
-<p>
-334 VXNlcm5hbWU6
-</p>
-<pre class="example">
-VXNlcm5hbWU6即base64的Username:（echo -n 'VXNlcm5hbWU6'|base64 -d）
-填邮箱名，需要用echo -n 'xxxxxx@xxx.xxx.xxx'|base64转换
-</pre>
-<p>
-334 UGFzc3dvcmQ6
-</p>
-<pre class="example">
-UGFzc3dvcmQ6即base64的Password:（echo -n 'UGFzc3dvcmQ6'|base64 -d）
-填用邮箱密码，需要用echo -n 'password'|base64转换
-</pre>
-<p>
-235 2.7.0 Authentication successful
-</p>
-<pre class="example">
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.0 Ok
-</p>
-<pre class="example">
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.5 Ok
-</p>
-<pre class="example">
-data
-</pre>
-<p>
-354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
-</p>
-<pre class="example">
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-</pre>
-<p>
-250 2.0.0 Ok: queued as DD6D140F8C
-</p>
-<pre class="example">
-quit
-</pre>
-<p>
-221 2.0.0 Bye
+A flume、sqoop
 </p>
 
 <p>
-closed
+B maxwell、datax、canal
 </p>
 
 <p>
-其中的Cc头字段表示抄送，而Date头字段好像并没有什么用，服务器会自动修改为当前日期。
+C logstash
 </p>
 
-<ul class="org-ul">
-<li>如果需要非交互方式下发送邮件，可以vi mymail.txt</li>
-</ul>
+<p>
+D waterdrop
+</p>
+
+<p>
+ABCD
+</p>
+
+<p>
+2、实现ODS层建表并完成表数据的加载；查询表“ods\<sub>death</sub>\<sub>log</sub>”头10行数据，并截图
+</p>
+
+<p>
+如果电脑性能不足，可以适当减少数据量
+</p>
+
+<p>
+ODS层“ods\<sub>death</sub>\<sub>log</sub>”表的建表及表数据的加载：
+</p>
+
 <pre class="example">
-helo localhost
-auth login
-邮箱名
-邮箱密码
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-data
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-quit
+vim ods_death_log.sh
 </pre>
-<p>
-注意，若&lt;xxxxxx@xxx.xxx&gt;中不包含空格，是可以省去尖括号的。
-最后
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet &lt; mymail.txt
-</pre>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org68e1ced" class="outline-2">
-<h2 id="org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</h2>
-<div class="outline-text-2" id="text-org68e1ced">
-<p>
-在非阿里云主机上搭建一台smtp，额外开通2525端口：
-vi /etc/postfix/master.cf
-</p>
 <pre class="example">
-smtp      inet  n       -       n       -       -       smtpd
-# custom service-name
-smtp2      inet  n       -       n       -       -       smtpd
+#!/bin/bash
+
+
+DBNAME=game_center
+
+hive_home=/kkb/install/apache-hive-3.1.2/bin/hive
+
+
+sql="
+create database if not exists  game_center;
+use game_center;
+CREATE TABLE if not exists ods_death_log(
+plat_id            string     comment '平台id',
+server_id          int        comment '服务器ID ',
+channel_id         string     comment '渠道ID ',
+user_id            string     comment '用户ID ',
+role_id            string     comment '角色ID ',
+role_name          string     comment '角色名称 ',
+client_ip          string     comment '客户端IP ',
+event_time         int        comment '事件时间 ',
+log_id             string     comment '日志ID',
+map_id             int        comment '地图ID',
+attacker_uid       string     comment '凶手用户ID/怪物id ',
+attacker_rid       string     comment '凶手角色ID/怪物id ',
+attacker_rname     string     comment '凶手/怪物名称',
+attacker_level     int        comment '凶手/怪物等级',
+death_level        int        comment '死亡等级',
+hero_power         bigint     comment '当前玩家战斗力或者伤害',
+death_detail       string     comment '死亡详细'
+)
+comment '玩家死亡日志'
+PARTITIONED BY(part_date date)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+CREATE TABLE  if not exists tmp_ods_death_log(
+plat_id            string     comment '平台id',
+server_id          int        comment '服务器ID ',
+channel_id         string     comment '渠道ID ',
+user_id            string     comment '用户ID ',
+role_id            string     comment '角色ID ',
+role_name          string     comment '角色名称 ',
+client_ip          string     comment '客户端IP ',
+event_time         int        comment '事件时间 ',
+log_id             string     comment '日志ID',
+map_id             int        comment '地图ID',
+attacker_uid       string     comment '凶手用户ID/怪物id ',
+attacker_rid       string     comment '凶手角色ID/怪物id ',
+attacker_rname     string     comment '凶手/怪物名称',
+attacker_level     int        comment '凶手/怪物等级',
+death_level        int        comment '死亡等级',
+hero_power         bigint     comment '当前玩家战斗力或者伤害',
+death_detail       string     comment '死亡详细'
+)
+comment '玩家死亡日志-临时表，用于将数据通过动态分区载入ods_death_log中'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+load data local inpath '/kkb/datas/gamecenter/ods_death_log.txt' overwrite into table tmp_ods_death_log;
+
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nostrict;
+set hive.exec.max.dynamic.partitions.pernode=1000;
+
+insert overwrite table ods_death_log partition(part_date)
+select plat_id,server_id,channel_id,user_id,role_id,role_name,client_ip,event_time,log_id,map_id,attacker_uid,attacker_rid,attacker_rname,attacker_level,death_level,hero_power,death_detail,from_unixtime(event_time,'yyyy-MM-dd') as part_date from tmp_ods_death_log;
+
+"
+
+$hive_home -e "$sql"
+</pre>
+
+<pre class="example">
+chmod +x ods_death_log.sh
+./ods_death_log.sh
 </pre>
 
 <p>
-vi /etc/services
+查询“ods\<sub>death</sub>\<sub>log</sub>”头10行：
 </p>
-<pre class="example">
-smtp            25/tcp          mail
-smtp            25/udp          mail
-smtp2           2525/tcp          mail2    # custom smtp prot
-smtp2           2525/udp          mail2    # custom smtp prot
-</pre>
 
 <div class="org-src-container">
-<pre class="src src-shell">service postfix reload
+<pre class="src src-sql">use game_center;
+!set outputformat vertical
+select * from ods_death_log limit 10;
 </pre>
 </div>
 
 <p>
-最后修改阿里云主机的mailx配置文件，vi /etc/mail.rc，在末尾加入：
+查询结果：
 </p>
+
+<p>
+<img src="./20201225_数据仓库第一次课.assets/QQ图片20201227225635.png" alt="QQ图片20201227225635.png" />
+ODS层所有数据建表以及数据加载完成后，show tables;的结果：
+</p>
+
+<p>
+<img src="./20201225_数据仓库第一次课.assets/Snipaste_2020-12-27_23-50-46.png" alt="Snipaste_2020-12-27_23-50-46.png" />
+3、使用hdfs命令，提供ods\<sub>fight</sub>\<sub>power确实被压缩变小了的证据</sub>，给出命令，及运行截图
+</p>
+
 <pre class="example">
-set smtp=111.111.111.111:2525
+hdfs dfs -du -s -h /user/hive/warehouse/game_center.db/tmp_ods_fight_power
+hdfs dfs -du -s -h /user/hive/warehouse/game_center.db/ods_fight_power
 </pre>
 
 <p>
-<a href="https://www.cnblogs.com/workdsz/articles/9335030.html">https://www.cnblogs.com/workdsz/articles/9335030.html</a>
-另一种方法是，使用nat端口转发：
-<a href="http://yo.zgserver.com/smtpredirect-2.html">http://yo.zgserver.com/smtpredirect-2.html</a>
+运行结果：
 </p>
-</div>
-</div>
-<div id="outline-container-orgd06bd4a" class="outline-2">
-<h2 id="orgd06bd4a">参考</h2>
-<div class="outline-text-2" id="text-orgd06bd4a">
+
 <p>
-<a href="https://tools.ietf.org/html/rfc821">https://tools.ietf.org/html/rfc821</a><br />
-<a href="https://tools.ietf.org/html/rfc5321">https://tools.ietf.org/html/rfc5321</a><br />
-<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol</a>
+<img src="./20201225_数据仓库第一次课.assets/Snipaste_2020-12-27_23-19-05.png" alt="Snipaste_2020-12-27_23-19-05.png" />
+4、简答题：谈一谈，生产中使用snappy压缩的hive表，如何做到即能使用snappy压缩的优秀性能，又能规避snappy不支持切分的弊端
 </p>
-</div>
-</div>
+
+<p>
+先建立一个带分区和压缩的最终表表结构，
+和一个普通临时表表结构。然后以load方式将原始数据加载到临时表中。最后，开启动态分区和压缩算法，并通过“insert
+overwirte 最终表 分区字段 select
+临时表”的方式将数据插入到最终表中。这样做能够使使用snappy算法压缩hive表后变得可切分的原因是，虽然整张hiave表经snappy算法压缩后不支持split，但在临时表插入最终表的过程中可以通过设置reduce的个数，从而使得最终表中的数据被提前切分成按不同的reduce所产生的数据，然后再分别进行压缩。（尽量保持snappy压缩之后的reduce数据稍小于128M这个块大小，这样会有利提高以后数据使用时的性能）
+</p>
 </div>
 </body>
 </html>

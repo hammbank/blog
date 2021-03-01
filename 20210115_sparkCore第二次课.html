@@ -6,9 +6,8 @@
 <!-- 2021-03-01 周一 23:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>使用mailx和openssl发送邮件</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="朱捷文" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -243,234 +242,68 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">使用mailx和openssl发送邮件</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org000eb09">使用mailx发送邮件</a></li>
-<li><a href="#orgec8b65e">使用openssl发送加密邮件</a></li>
-<li><a href="#org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</a></li>
-<li><a href="#orgd06bd4a">参考</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org000eb09" class="outline-2">
-<h2 id="org000eb09">使用mailx发送邮件</h2>
-<div class="outline-text-2" id="text-org000eb09">
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-
 <p>
-使用sendmail发送指定from name的邮件：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com -- -f "fromname" &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-<p>
-注意，其中的-f为传递给sendmail的参数。CentOS7上更好的方法是使用mailx的-r参数。
+1、判断题：RDD在调用mapPartitions算子的过程中，会产生shuffle操作
 </p>
 
 <p>
-mailx配置remote smtp作为MTA，在mailx的配置文件/etc/mail.rc最后增加：
-</p>
-<pre class="example">
-set from=account@example.com
-set smtp=111.111.111.111
-set smtp-auth-user=account@example.com
-set smtp-auth-password=123456
-set smtp-auth=login
-</pre>
-<p>
-set smtp除了ip也可以是A记录域名，由于是A记录也可以通过/etc/hosts来绑定域名ip。
-</p>
-</div>
-</div>
-<div id="outline-container-orgec8b65e" class="outline-2">
-<h2 id="orgec8b65e">使用openssl发送加密邮件</h2>
-<div class="outline-text-2" id="text-orgec8b65e">
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet
-</pre>
-</div>
-<ul class="org-ul">
-<li>openssl用于以ssl方式登录发送邮件，默认端口465。</li>
-<li>-crlf把LF转换为CR+LF，某些SMTP服务实现必须以CR+LF作为行标识符，才可以识别SMTP命令。</li>
-<li>-quiet用来禁止打印会话和证书信息，而且-quiet蕴涵了-ign_eof。如果不加-quiet或-ign_eof参数，openssl会把以B，R，Q为起始符的行作为命令来看待。下面是openssl s_client的manpage：</li>
-</ul>
-<pre class="example">
-CONNECTED COMMANDS
-       If a connection is established with an SSL server then any data received from the server is displayed and any key presses will be sent to the server. When used interactively (which means neither -quiet nor -ign_eof have been given), the session will be renegotiated if the line begins with an R, and if the line begins with a Q or if end of file is reached, the connection will be closed down.
-</pre>
-<p>
-&#x2026;
-220 mail.mycorp.com ESMTP EMOS V1.6 (Postfix)
-</p>
-<pre class="example">
-helo localhost
-</pre>
-<p>
-250 mail.mycorp.com
-</p>
-<pre class="example">
-auth login
-</pre>
-<p>
-334 VXNlcm5hbWU6
-</p>
-<pre class="example">
-VXNlcm5hbWU6即base64的Username:（echo -n 'VXNlcm5hbWU6'|base64 -d）
-填邮箱名，需要用echo -n 'xxxxxx@xxx.xxx.xxx'|base64转换
-</pre>
-<p>
-334 UGFzc3dvcmQ6
-</p>
-<pre class="example">
-UGFzc3dvcmQ6即base64的Password:（echo -n 'UGFzc3dvcmQ6'|base64 -d）
-填用邮箱密码，需要用echo -n 'password'|base64转换
-</pre>
-<p>
-235 2.7.0 Authentication successful
-</p>
-<pre class="example">
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.0 Ok
-</p>
-<pre class="example">
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.5 Ok
-</p>
-<pre class="example">
-data
-</pre>
-<p>
-354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
-</p>
-<pre class="example">
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-</pre>
-<p>
-250 2.0.0 Ok: queued as DD6D140F8C
-</p>
-<pre class="example">
-quit
-</pre>
-<p>
-221 2.0.0 Bye
+错。map, mapPartitions, foreach,
+foreachPartition都是窄依赖，都不会产生shuffle操作。另外，foreach,
+foreachPartition由于涉及到屏幕打印输出属于Action算子，map,
+mapPartitions只涉数据源到RDD或RDD到RDD间的数据转换处理因此属于Transformation算子。
 </p>
 
 <p>
-closed
+2、利用上课所用文件access.log，统计出访问URL最少的6个
 </p>
 
-<p>
-其中的Cc头字段表示抄送，而Date头字段好像并没有什么用，服务器会自动修改为当前日期。
-</p>
-
-<ul class="org-ul">
-<li>如果需要非交互方式下发送邮件，可以vi mymail.txt</li>
-</ul>
 <pre class="example">
-helo localhost
-auth login
-邮箱名
-邮箱密码
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-data
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
+package com.kkb.spark.core
 
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-quit
-</pre>
-<p>
-注意，若&lt;xxxxxx@xxx.xxx&gt;中不包含空格，是可以省去尖括号的。
-最后
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet &lt; mymail.txt
-</pre>
-</div>
-</div>
-</div>
+import org.apache.spark.rdd.RDD
+import org.apache.spark.{SparkConf, SparkContext}
 
-<div id="outline-container-org68e1ced" class="outline-2">
-<h2 id="org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</h2>
-<div class="outline-text-2" id="text-org68e1ced">
-<p>
-在非阿里云主机上搭建一台smtp，额外开通2525端口：
-vi /etc/postfix/master.cf
-</p>
-<pre class="example">
-smtp      inet  n       -       n       -       -       smtpd
-# custom service-name
-smtp2      inet  n       -       n       -       -       smtpd
+object VisitBottomN {
+  def main(args: Array[String]): Unit = {
+    //1、创建SparkConf对象
+    val sparkConf: SparkConf = new SparkConf().setAppName("VisitBottomN").setMaster("local[2]")
+    //2、创建SparkContext对象
+    val sc = new SparkContext(sparkConf)
+    sc.setLogLevel("warn")
+    //3、读取数据文件
+    val dataRDD: RDD[String] = sc.textFile(this.getClass().getClassLoader.getResource("access.log").getPath)
+    //4、先对数据进行过滤
+    val filterRDD: RDD[String] = dataRDD.filter(x =&gt; x.split(" ").length &gt; 10)
+    //5、获取每一个条数据中的url地址链接 index=10
+    val urlsRDD: RDD[String] = filterRDD.map(x =&gt; x.split(" ")(10))
+    //6、过滤掉不是http的请求
+    val fUrlRDD: RDD[String] = urlsRDD.filter(_.contains("http"))
+    //7、把每一个url计为1
+    val urlAndOneRDD: RDD[(String, Int)] = fUrlRDD.map(x =&gt; (x, 1))
+    //8、相同的url出现1进行累加
+    val result: RDD[(String, Int)] = urlAndOneRDD.reduceByKey(_ + _)
+    //9、对url出现的次数进行排序----升序
+    val sortRDD: RDD[(String, Int)] = result.sortBy(_._2, true)
+    //10、取出url出现次数最少的6个
+    val top5: Array[(String, Int)] = sortRDD.take(6)
+    top5.foreach(println)
+    sc.stop()
+  }
+}
 </pre>
 
 <p>
-vi /etc/services
+<img src="./20210115_sparkCore第二次课.assets/屏幕截图%202021-01-17%20215245.png" alt="屏幕截图%202021-01-17%20215245.png" />
+3、判断题：
 </p>
-<pre class="example">
-smtp            25/tcp          mail
-smtp            25/udp          mail
-smtp2           2525/tcp          mail2    # custom smtp prot
-smtp2           2525/udp          mail2    # custom smtp prot
-</pre>
-
-<div class="org-src-container">
-<pre class="src src-shell">service postfix reload
-</pre>
-</div>
 
 <p>
-最后修改阿里云主机的mailx配置文件，vi /etc/mail.rc，在末尾加入：
+groupByKey算子会产生shuffle，并且对数据提前进行聚合操作
 </p>
-<pre class="example">
-set smtp=111.111.111.111:2525
-</pre>
 
 <p>
-<a href="https://www.cnblogs.com/workdsz/articles/9335030.html">https://www.cnblogs.com/workdsz/articles/9335030.html</a>
-另一种方法是，使用nat端口转发：
-<a href="http://yo.zgserver.com/smtpredirect-2.html">http://yo.zgserver.com/smtpredirect-2.html</a>
+错。会产生shuffle，并且对数据提前进行聚合（即combine预聚合）操作的是reduceByKey算子。虽然groupByKey算子会产生shuffle，但groupByKey并不会对数据提前进行combine操作。
 </p>
-</div>
-</div>
-<div id="outline-container-orgd06bd4a" class="outline-2">
-<h2 id="orgd06bd4a">参考</h2>
-<div class="outline-text-2" id="text-orgd06bd4a">
-<p>
-<a href="https://tools.ietf.org/html/rfc821">https://tools.ietf.org/html/rfc821</a><br />
-<a href="https://tools.ietf.org/html/rfc5321">https://tools.ietf.org/html/rfc5321</a><br />
-<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol</a>
-</p>
-</div>
-</div>
 </div>
 </body>
 </html>

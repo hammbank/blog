@@ -6,9 +6,8 @@
 <!-- 2021-03-01 周一 23:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>使用mailx和openssl发送邮件</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="朱捷文" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -243,234 +242,71 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">使用mailx和openssl发送邮件</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org000eb09">使用mailx发送邮件</a></li>
-<li><a href="#orgec8b65e">使用openssl发送加密邮件</a></li>
-<li><a href="#org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</a></li>
-<li><a href="#orgd06bd4a">参考</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org000eb09" class="outline-2">
-<h2 id="org000eb09">使用mailx发送邮件</h2>
-<div class="outline-text-2" id="text-org000eb09">
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-
 <p>
-使用sendmail发送指定from name的邮件：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">mailx -s "Test email" test@example.com -- -f "fromname" &lt;&lt;&lt; 'Here is the message body.'
-</pre>
-</div>
-<p>
-注意，其中的-f为传递给sendmail的参数。CentOS7上更好的方法是使用mailx的-r参数。
+1、判断题：RDD的transformation算子中的函数使用到了外部的对象需要序列化，是因为对象需要从driver端发送到executor端
 </p>
 
 <p>
-mailx配置remote smtp作为MTA，在mailx的配置文件/etc/mail.rc最后增加：
-</p>
-<pre class="example">
-set from=account@example.com
-set smtp=111.111.111.111
-set smtp-auth-user=account@example.com
-set smtp-auth-password=123456
-set smtp-auth=login
-</pre>
-<p>
-set smtp除了ip也可以是A记录域名，由于是A记录也可以通过/etc/hosts来绑定域名ip。
-</p>
-</div>
-</div>
-<div id="outline-container-orgec8b65e" class="outline-2">
-<h2 id="orgec8b65e">使用openssl发送加密邮件</h2>
-<div class="outline-text-2" id="text-orgec8b65e">
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet
-</pre>
-</div>
-<ul class="org-ul">
-<li>openssl用于以ssl方式登录发送邮件，默认端口465。</li>
-<li>-crlf把LF转换为CR+LF，某些SMTP服务实现必须以CR+LF作为行标识符，才可以识别SMTP命令。</li>
-<li>-quiet用来禁止打印会话和证书信息，而且-quiet蕴涵了-ign_eof。如果不加-quiet或-ign_eof参数，openssl会把以B，R，Q为起始符的行作为命令来看待。下面是openssl s_client的manpage：</li>
-</ul>
-<pre class="example">
-CONNECTED COMMANDS
-       If a connection is established with an SSL server then any data received from the server is displayed and any key presses will be sent to the server. When used interactively (which means neither -quiet nor -ign_eof have been given), the session will be renegotiated if the line begins with an R, and if the line begins with a Q or if end of file is reached, the connection will be closed down.
-</pre>
-<p>
-&#x2026;
-220 mail.mycorp.com ESMTP EMOS V1.6 (Postfix)
-</p>
-<pre class="example">
-helo localhost
-</pre>
-<p>
-250 mail.mycorp.com
-</p>
-<pre class="example">
-auth login
-</pre>
-<p>
-334 VXNlcm5hbWU6
-</p>
-<pre class="example">
-VXNlcm5hbWU6即base64的Username:（echo -n 'VXNlcm5hbWU6'|base64 -d）
-填邮箱名，需要用echo -n 'xxxxxx@xxx.xxx.xxx'|base64转换
-</pre>
-<p>
-334 UGFzc3dvcmQ6
-</p>
-<pre class="example">
-UGFzc3dvcmQ6即base64的Password:（echo -n 'UGFzc3dvcmQ6'|base64 -d）
-填用邮箱密码，需要用echo -n 'password'|base64转换
-</pre>
-<p>
-235 2.7.0 Authentication successful
-</p>
-<pre class="example">
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.0 Ok
-</p>
-<pre class="example">
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-</pre>
-<p>
-250 2.1.5 Ok
-</p>
-<pre class="example">
-data
-</pre>
-<p>
-354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
-</p>
-<pre class="example">
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-</pre>
-<p>
-250 2.0.0 Ok: queued as DD6D140F8C
-</p>
-<pre class="example">
-quit
-</pre>
-<p>
-221 2.0.0 Bye
+对。是因为对象需要从driver端发送到远程的executor端。
 </p>
 
 <p>
-closed
+2、谈谈spark编程，遇到数据倾斜，如何定位原因？
 </p>
 
 <p>
-其中的Cc头字段表示抄送，而Date头字段好像并没有什么用，服务器会自动修改为当前日期。
+1）根据log日志信息定位。尤其可以关注distinct、groupByKey、reduceByKey、aggregateByKey、join、cogroup、repartition等算子，产生的相应的日志。
 </p>
-
-<ul class="org-ul">
-<li>如果需要非交互方式下发送邮件，可以vi mymail.txt</li>
-</ul>
-<pre class="example">
-helo localhost
-auth login
-邮箱名
-邮箱密码
-mail from:&lt;xxxxxx@xxx.xxx&gt;
-rcpt to:&lt;xxxxxx@xxx.xxx&gt;
-data
-From: "Bob Example" &lt;bob@example.org&gt;
-To: "Alice Example" &lt;alice@example.com&gt;
-Cc: theboss@example.com
-Date: Tue, 15 January 2008 16:02:43 -0500
-Subject: Test message
-
-Hello Alice.
-This is a test message with 5 header fields and 4 lines in the message body.
-Your friend,
-Bob
-.
-quit
-</pre>
-<p>
-注意，若&lt;xxxxxx@xxx.xxx&gt;中不包含空格，是可以省去尖括号的。
-最后
-</p>
-<div class="org-src-container">
-<pre class="src src-sh">openssl s_client -connect mail.gw.com.cn:465 -crlf -quiet &lt; mymail.txt
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org68e1ced" class="outline-2">
-<h2 id="org68e1ced">关于阿里云主机绕过外连25端口被屏蔽的方法</h2>
-<div class="outline-text-2" id="text-org68e1ced">
-<p>
-在非阿里云主机上搭建一台smtp，额外开通2525端口：
-vi /etc/postfix/master.cf
-</p>
-<pre class="example">
-smtp      inet  n       -       n       -       -       smtpd
-# custom service-name
-smtp2      inet  n       -       n       -       -       smtpd
-</pre>
 
 <p>
-vi /etc/services
+2）分析定位法。数据倾斜发生在第几个stage，可以在任务运行的过程中，通过Spark
+Web
+UI界面，观察到每一个stage中运行的task的数据量以及task的运行时间，从而进一步确定是不是task分配的数据不均匀导致了数据倾斜。
 </p>
-<pre class="example">
-smtp            25/tcp          mail
-smtp            25/udp          mail
-smtp2           2525/tcp          mail2    # custom smtp prot
-smtp2           2525/udp          mail2    # custom smtp prot
-</pre>
-
-<div class="org-src-container">
-<pre class="src src-shell">service postfix reload
-</pre>
-</div>
 
 <p>
-最后修改阿里云主机的mailx配置文件，vi /etc/mail.rc，在末尾加入：
+3）若task发生内存溢出（OOM），直接看yarn-client模式下本地log的异常栈，或者是通过YARN查看yarn-cluster模式下的log中的异常栈。一般来说，通过异常栈信息就可以定位到你的代码中哪一行发生了内存溢出。然后在那行代码附近找，一般也会有shuffle类算子，此时很可能就是这个算子导致了数据倾斜。
 </p>
-<pre class="example">
-set smtp=111.111.111.111:2525
-</pre>
 
 <p>
-<a href="https://www.cnblogs.com/workdsz/articles/9335030.html">https://www.cnblogs.com/workdsz/articles/9335030.html</a>
-另一种方法是，使用nat端口转发：
-<a href="http://yo.zgserver.com/smtpredirect-2.html">http://yo.zgserver.com/smtpredirect-2.html</a>
+4）查看导致数据倾斜的key的数据分布情况。我们可以先对key采样样本数据，然后统计出每个key出现的次数来获取key的数据的分布情况。这主要是为之后选择哪一种技术方案来解决数据倾斜提供依据。
 </p>
-</div>
-</div>
-<div id="outline-container-orgd06bd4a" class="outline-2">
-<h2 id="orgd06bd4a">参考</h2>
-<div class="outline-text-2" id="text-orgd06bd4a">
+
 <p>
-<a href="https://tools.ietf.org/html/rfc821">https://tools.ietf.org/html/rfc821</a><br />
-<a href="https://tools.ietf.org/html/rfc5321">https://tools.ietf.org/html/rfc5321</a><br />
-<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol</a>
+3、简述spark中的统一（动态）内存管理和静态内存管理的区别？
 </p>
-</div>
-</div>
+
+<p>
+1）静态内存管理模块只包含堆内内存(On-heap
+Memory)。统一内存管理模块包括了堆内内存(On-heap
+Memory)和堆外内存(Off-heap Memory)两大区域。
+</p>
+
+<p>
+2）静态内存管理方式早就已经被淘汰，spark新的版本都是直接使用统一内存管理（动态内存管理）。
+</p>
+
+<p>
+3）在 Spark
+最初采用的静态内存管理机制下，存储内存、执行内存和其他内存的大小在 Spark
+应用程序运行期间均为固定的，用户需要在应用程序启动前进行配置。而在目前的统一内存管理中，
+Execution 内存和 Storage 内存可以互相共享的。也就是说，如果 Execution
+内存不足，而 Storage 内存有空闲，那么 Execution 可以从 Storage
+中申请空间；反之亦然。
+</p>
+
+<p>
+4、判断题：spark中，最开始的未经优化的HashShuffleManager，假设map
+task有M个，reduce
+task个数有R个，那么，每个reduce的buffer需要从M*R个磁盘小文件拉取数据
+</p>
+
+<p>
+错。最开始的未经优化的HashShuffleManager会产生大量的小文件，每个 Map
+Task 为每个 Reduce Task 生成一个文件，通常会产生大量的文件（即对应为 M*R
+个中间文件，其中 M 表示 Map Task 个数，R 表示 Reduce Task 个数）
+,也就是说每个reduce的buffer需要从M个磁盘小文件拉取数据。
+</p>
 </div>
 </body>
 </html>
