@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-10 周三 16:54 -->
+<!-- 2021-03-10 周三 16:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>hammbank's blog</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -242,45 +242,194 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">hammbank's blog</h1>
-<ul class="org-ul">
-<li><a href="20201130-HDFS分布式文件系统.html">20201130-HDFS分布式文件系统</a></li>
-<li><a href="20201202-MapReduce计算框架初探.html">20201202-MapReduce计算框架初探</a></li>
-<li><a href="20201204-MapReduce计算框架高级编程及核心原理.html">20201204-MapReduce计算框架高级编程及核心原理</a></li>
-<li><a href="20201207-YARN资源调度框架&amp;Hadoop调优.html">20201207-YARN资源调度框架&amp;Hadoop调优</a></li>
-<li><a href="20201209-hive数仓工具入门.html">20201209-hive数仓工具入门</a></li>
-<li><a href="20201211-hive数仓工具应用.html">20201211-hive数仓工具应用</a></li>
-<li><a href="20201214-hive企业级调优.html">20201214-hive企业级调优</a></li>
-<li><a href="20201216-HBaseNoSQL数据库快速入门.html">20201216-HBaseNoSQL数据库快速入门</a></li>
-<li><a href="20201218-HBase核心原理.html">20201218-HBase核心原理</a></li>
-<li><a href="20201221-HBase高级应用.html">20201221-HBase高级应用</a></li>
-<li><a href="20201223-Flume数据采集框架.html">20201223-Flume数据采集框架</a></li>
-<li><a href="20201225-数据仓库第一次课.html">20201225-数据仓库第一次课</a></li>
-<li><a href="20201228-数据仓库第二次课.html">20201228-数据仓库第二次课</a></li>
-<li><a href="20201230-数据仓库第三次课.html">20201230-数据仓库第三次课</a></li>
-<li><a href="20210104-数据仓库第四次课.html">20210104-数据仓库第四次课</a></li>
-<li><a href="20210106-数据仓库第五次课.html">20210106-数据仓库第五次课</a></li>
-<li><a href="20210108-scala第一次课.html">20210108-scala第一次课</a></li>
-<li><a href="20210111-scala第二次课.html">20210111-scala第二次课</a></li>
-<li><a href="20210113-sparkCore第一次课.html">20210113-sparkCore第一次课</a></li>
-<li><a href="20210115-sparkCore第二次课.html">20210115-sparkCore第二次课</a></li>
-<li><a href="20210118-sparkCore第三次课.html">20210118-sparkCore第三次课</a></li>
-<li><a href="20210120-sparkSql第一次课.html">20210120-sparkSql第一次课</a></li>
-<li><a href="20210122-sparkSql第二次课.html">20210122-sparkSql第二次课</a></li>
-<li><a href="20210125-kafka第一次课.html">20210125-kafka第一次课</a></li>
-<li><a href="20210127-kafka第二次课.html">20210127-kafka第二次课</a></li>
-<li><a href="20210129-sparkStreaming第一次课.html">20210129-sparkStreaming第一次课</a></li>
-<li><a href="20210201-sparkStreaming第二次课.html">20210201-sparkStreaming第二次课</a></li>
-<li><a href="20210203-sparkStreaming第三次课.html">20210203-sparkStreaming第三次课</a></li>
-<li><a href="20210224-Flink第一次课.html">20210224-Flink第一次课</a></li>
-<li><a href="20210226-Flink第二次课.html">20210226-Flink第二次课</a></li>
-<li><a href="ELK部署手册.html">ELK部署手册</a></li>
-<li><a href="ansible学习笔记.html">ansible学习笔记</a></li>
-<li><a href="centos中的umask.html">centos中的umask</a></li>
-<li><a href="lvs+keepalive.html">lvs+keepalive</a></li>
-<li><a href="使用mailx和openssl发送邮件.html">使用mailx和openssl发送邮件</a></li>
-<li><a href="远程桌面--ssh的x-forwording.html">远程桌面——ssh的X转发</a></li>
-</ul>
+<p>
+hbase第一次课时，编程已经创建了表myuser；现在使用mr编程，将此表的数据读出来，写入一个HDFS文件/user/hadoop/myuser.txt
+</p>
+
+<p>
+pom.xml:
+</p>
+
+<pre class="example">
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-client&lt;/artifactId&gt;
+        &lt;version&gt;3.1.4&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-auth&lt;/artifactId&gt;
+        &lt;version&gt;3.1.4&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hbase&lt;/groupId&gt;
+        &lt;artifactId&gt;hbase-client&lt;/artifactId&gt;
+        &lt;version&gt;2.2.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hbase&lt;/groupId&gt;
+        &lt;artifactId&gt;hbase-mapreduce&lt;/artifactId&gt;
+        &lt;version&gt;2.2.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hbase&lt;/groupId&gt;
+        &lt;artifactId&gt;hbase-server&lt;/artifactId&gt;
+        &lt;version&gt;2.2.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;4.12&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.testng&lt;/groupId&gt;
+        &lt;artifactId&gt;testng&lt;/artifactId&gt;
+        &lt;version&gt;6.14.3&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.0&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;1.8&lt;/source&gt;
+                &lt;target&gt;1.8&lt;/target&gt;
+                &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                &lt;!--    &lt;verbal&gt;true&lt;/verbal&gt;--&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.2&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;phase&gt;package&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;shade&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;filters&gt;
+                            &lt;filter&gt;
+                                &lt;artifact&gt;*:*&lt;/artifact&gt;
+                                &lt;excludes&gt;
+                                    &lt;exclude&gt;META-INF/*.SF&lt;/exclude&gt;
+                                    &lt;exclude&gt;META-INF/*.DSA&lt;/exclude&gt;
+                                    &lt;exclude&gt;META-INF/*/RSA&lt;/exclude&gt;
+                                &lt;/excludes&gt;
+                            &lt;/filter&gt;
+                        &lt;/filters&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+
+<p>
+java代码:
+</p>
+
+<pre class="example">
+package com.kkb.demo04;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
+import org.apache.hadoop.hbase.mapreduce.TableMapper;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+import java.io.IOException;
+
+
+public class HBase2HDFS {
+
+    public static class MyMapper extends TableMapper&lt;Text, Text&gt; {
+        Text textRow = new Text();
+        Text textValue = new Text();
+        @Override
+        public void map(ImmutableBytesWritable row, Result value, Context context) throws IOException, InterruptedException {
+            textRow.set(row.toString());
+            textValue.set(value.toString());
+            context.write(textRow, textValue);
+        }
+    }
+
+    public static class MyReducer extends Reducer&lt;Text, Text, Text, Text&gt; {
+        @Override
+        public void reduce(Text key, Iterable&lt;Text&gt; values, Context context) throws IOException, InterruptedException {
+            for (Text value : values) {
+                context.write(key, value);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+        Configuration conf = HBaseConfiguration.create();
+        conf.set("hbase.zookeeper.quorum", "node01:2181,node02:2181,node03:2181");
+        Job job = Job.getInstance(conf);
+
+        job.setJarByClass(HBase2HDFS.class);
+
+        TableMapReduceUtil.initTableMapperJob(TableName.valueOf("myuser"),
+                new Scan(),
+                MyMapper.class,
+                Text.class,
+                Text.class,
+                job);
+
+        job.setReducerClass(MyReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
+        job.setOutputFormatClass(TextOutputFormat.class);
+        TextOutputFormat.setOutputPath(job, new Path("hdfs://node01:8020/user/hadoop/myuser.txt"));
+
+        job.setNumReduceTasks(1);
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+}
+</pre>
+
+<p>
+编译打包:
+</p>
+
+<pre class="example">
+mvn clean package -Dmaven.test.skip=true
+</pre>
+
+<p>
+linux环境下运行程序并查看hdfs上的输出文件：
+</p>
+
+<pre class="example">
+yarn jar hbase_day03-1.0-SNAPSHOT.jar com.kkb.demo04.HBase2HDFS
+hdfs dfs -cat /user/hadoop/myuser.txt/part-r-00000
+</pre>
+
+<p>
+输出到/user/hadoop/myuser.txt中的内容：
+</p>
+
+
+<div class="figure">
+<p><img src="./20201221-HBase高级应用.assets/Snipaste_2020-12-23_10-02-45.png" alt="Snipaste_2020-12-23_10-02-45.png" />
+</p>
+</div>
 </div>
 </body>
 </html>

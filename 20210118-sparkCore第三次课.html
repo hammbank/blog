@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-10 周三 16:54 -->
+<!-- 2021-03-10 周三 16:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>hammbank's blog</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -242,45 +242,71 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">hammbank's blog</h1>
-<ul class="org-ul">
-<li><a href="20201130-HDFS分布式文件系统.html">20201130-HDFS分布式文件系统</a></li>
-<li><a href="20201202-MapReduce计算框架初探.html">20201202-MapReduce计算框架初探</a></li>
-<li><a href="20201204-MapReduce计算框架高级编程及核心原理.html">20201204-MapReduce计算框架高级编程及核心原理</a></li>
-<li><a href="20201207-YARN资源调度框架&amp;Hadoop调优.html">20201207-YARN资源调度框架&amp;Hadoop调优</a></li>
-<li><a href="20201209-hive数仓工具入门.html">20201209-hive数仓工具入门</a></li>
-<li><a href="20201211-hive数仓工具应用.html">20201211-hive数仓工具应用</a></li>
-<li><a href="20201214-hive企业级调优.html">20201214-hive企业级调优</a></li>
-<li><a href="20201216-HBaseNoSQL数据库快速入门.html">20201216-HBaseNoSQL数据库快速入门</a></li>
-<li><a href="20201218-HBase核心原理.html">20201218-HBase核心原理</a></li>
-<li><a href="20201221-HBase高级应用.html">20201221-HBase高级应用</a></li>
-<li><a href="20201223-Flume数据采集框架.html">20201223-Flume数据采集框架</a></li>
-<li><a href="20201225-数据仓库第一次课.html">20201225-数据仓库第一次课</a></li>
-<li><a href="20201228-数据仓库第二次课.html">20201228-数据仓库第二次课</a></li>
-<li><a href="20201230-数据仓库第三次课.html">20201230-数据仓库第三次课</a></li>
-<li><a href="20210104-数据仓库第四次课.html">20210104-数据仓库第四次课</a></li>
-<li><a href="20210106-数据仓库第五次课.html">20210106-数据仓库第五次课</a></li>
-<li><a href="20210108-scala第一次课.html">20210108-scala第一次课</a></li>
-<li><a href="20210111-scala第二次课.html">20210111-scala第二次课</a></li>
-<li><a href="20210113-sparkCore第一次课.html">20210113-sparkCore第一次课</a></li>
-<li><a href="20210115-sparkCore第二次课.html">20210115-sparkCore第二次课</a></li>
-<li><a href="20210118-sparkCore第三次课.html">20210118-sparkCore第三次课</a></li>
-<li><a href="20210120-sparkSql第一次课.html">20210120-sparkSql第一次课</a></li>
-<li><a href="20210122-sparkSql第二次课.html">20210122-sparkSql第二次课</a></li>
-<li><a href="20210125-kafka第一次课.html">20210125-kafka第一次课</a></li>
-<li><a href="20210127-kafka第二次课.html">20210127-kafka第二次课</a></li>
-<li><a href="20210129-sparkStreaming第一次课.html">20210129-sparkStreaming第一次课</a></li>
-<li><a href="20210201-sparkStreaming第二次课.html">20210201-sparkStreaming第二次课</a></li>
-<li><a href="20210203-sparkStreaming第三次课.html">20210203-sparkStreaming第三次课</a></li>
-<li><a href="20210224-Flink第一次课.html">20210224-Flink第一次课</a></li>
-<li><a href="20210226-Flink第二次课.html">20210226-Flink第二次课</a></li>
-<li><a href="ELK部署手册.html">ELK部署手册</a></li>
-<li><a href="ansible学习笔记.html">ansible学习笔记</a></li>
-<li><a href="centos中的umask.html">centos中的umask</a></li>
-<li><a href="lvs+keepalive.html">lvs+keepalive</a></li>
-<li><a href="使用mailx和openssl发送邮件.html">使用mailx和openssl发送邮件</a></li>
-<li><a href="远程桌面--ssh的x-forwording.html">远程桌面——ssh的X转发</a></li>
-</ul>
+<p>
+1、判断题：RDD的transformation算子中的函数使用到了外部的对象需要序列化，是因为对象需要从driver端发送到executor端
+</p>
+
+<p>
+对。是因为对象需要从driver端发送到远程的executor端。
+</p>
+
+<p>
+2、谈谈spark编程，遇到数据倾斜，如何定位原因？
+</p>
+
+<p>
+1）根据log日志信息定位。尤其可以关注distinct、groupByKey、reduceByKey、aggregateByKey、join、cogroup、repartition等算子，产生的相应的日志。
+</p>
+
+<p>
+2）分析定位法。数据倾斜发生在第几个stage，可以在任务运行的过程中，通过Spark
+Web
+UI界面，观察到每一个stage中运行的task的数据量以及task的运行时间，从而进一步确定是不是task分配的数据不均匀导致了数据倾斜。
+</p>
+
+<p>
+3）若task发生内存溢出（OOM），直接看yarn-client模式下本地log的异常栈，或者是通过YARN查看yarn-cluster模式下的log中的异常栈。一般来说，通过异常栈信息就可以定位到你的代码中哪一行发生了内存溢出。然后在那行代码附近找，一般也会有shuffle类算子，此时很可能就是这个算子导致了数据倾斜。
+</p>
+
+<p>
+4）查看导致数据倾斜的key的数据分布情况。我们可以先对key采样样本数据，然后统计出每个key出现的次数来获取key的数据的分布情况。这主要是为之后选择哪一种技术方案来解决数据倾斜提供依据。
+</p>
+
+<p>
+3、简述spark中的统一（动态）内存管理和静态内存管理的区别？
+</p>
+
+<p>
+1）静态内存管理模块只包含堆内内存(On-heap
+Memory)。统一内存管理模块包括了堆内内存(On-heap
+Memory)和堆外内存(Off-heap Memory)两大区域。
+</p>
+
+<p>
+2）静态内存管理方式早就已经被淘汰，spark新的版本都是直接使用统一内存管理（动态内存管理）。
+</p>
+
+<p>
+3）在 Spark
+最初采用的静态内存管理机制下，存储内存、执行内存和其他内存的大小在 Spark
+应用程序运行期间均为固定的，用户需要在应用程序启动前进行配置。而在目前的统一内存管理中，
+Execution 内存和 Storage 内存可以互相共享的。也就是说，如果 Execution
+内存不足，而 Storage 内存有空闲，那么 Execution 可以从 Storage
+中申请空间；反之亦然。
+</p>
+
+<p>
+4、判断题：spark中，最开始的未经优化的HashShuffleManager，假设map
+task有M个，reduce
+task个数有R个，那么，每个reduce的buffer需要从M*R个磁盘小文件拉取数据
+</p>
+
+<p>
+错。最开始的未经优化的HashShuffleManager会产生大量的小文件，每个 Map
+Task 为每个 Reduce Task 生成一个文件，通常会产生大量的文件（即对应为 M*R
+个中间文件，其中 M 表示 Map Task 个数，R 表示 Reduce Task 个数）
+,也就是说每个reduce的buffer需要从M个磁盘小文件拉取数据。
+</p>
 </div>
 </body>
 </html>

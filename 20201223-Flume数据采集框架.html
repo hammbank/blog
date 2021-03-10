@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-10 周三 16:54 -->
+<!-- 2021-03-10 周三 16:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>hammbank's blog</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -242,45 +242,147 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">hammbank's blog</h1>
-<ul class="org-ul">
-<li><a href="20201130-HDFS分布式文件系统.html">20201130-HDFS分布式文件系统</a></li>
-<li><a href="20201202-MapReduce计算框架初探.html">20201202-MapReduce计算框架初探</a></li>
-<li><a href="20201204-MapReduce计算框架高级编程及核心原理.html">20201204-MapReduce计算框架高级编程及核心原理</a></li>
-<li><a href="20201207-YARN资源调度框架&amp;Hadoop调优.html">20201207-YARN资源调度框架&amp;Hadoop调优</a></li>
-<li><a href="20201209-hive数仓工具入门.html">20201209-hive数仓工具入门</a></li>
-<li><a href="20201211-hive数仓工具应用.html">20201211-hive数仓工具应用</a></li>
-<li><a href="20201214-hive企业级调优.html">20201214-hive企业级调优</a></li>
-<li><a href="20201216-HBaseNoSQL数据库快速入门.html">20201216-HBaseNoSQL数据库快速入门</a></li>
-<li><a href="20201218-HBase核心原理.html">20201218-HBase核心原理</a></li>
-<li><a href="20201221-HBase高级应用.html">20201221-HBase高级应用</a></li>
-<li><a href="20201223-Flume数据采集框架.html">20201223-Flume数据采集框架</a></li>
-<li><a href="20201225-数据仓库第一次课.html">20201225-数据仓库第一次课</a></li>
-<li><a href="20201228-数据仓库第二次课.html">20201228-数据仓库第二次课</a></li>
-<li><a href="20201230-数据仓库第三次课.html">20201230-数据仓库第三次课</a></li>
-<li><a href="20210104-数据仓库第四次课.html">20210104-数据仓库第四次课</a></li>
-<li><a href="20210106-数据仓库第五次课.html">20210106-数据仓库第五次课</a></li>
-<li><a href="20210108-scala第一次课.html">20210108-scala第一次课</a></li>
-<li><a href="20210111-scala第二次课.html">20210111-scala第二次课</a></li>
-<li><a href="20210113-sparkCore第一次课.html">20210113-sparkCore第一次课</a></li>
-<li><a href="20210115-sparkCore第二次课.html">20210115-sparkCore第二次课</a></li>
-<li><a href="20210118-sparkCore第三次课.html">20210118-sparkCore第三次课</a></li>
-<li><a href="20210120-sparkSql第一次课.html">20210120-sparkSql第一次课</a></li>
-<li><a href="20210122-sparkSql第二次课.html">20210122-sparkSql第二次课</a></li>
-<li><a href="20210125-kafka第一次课.html">20210125-kafka第一次课</a></li>
-<li><a href="20210127-kafka第二次课.html">20210127-kafka第二次课</a></li>
-<li><a href="20210129-sparkStreaming第一次课.html">20210129-sparkStreaming第一次课</a></li>
-<li><a href="20210201-sparkStreaming第二次课.html">20210201-sparkStreaming第二次课</a></li>
-<li><a href="20210203-sparkStreaming第三次课.html">20210203-sparkStreaming第三次课</a></li>
-<li><a href="20210224-Flink第一次课.html">20210224-Flink第一次课</a></li>
-<li><a href="20210226-Flink第二次课.html">20210226-Flink第二次课</a></li>
-<li><a href="ELK部署手册.html">ELK部署手册</a></li>
-<li><a href="ansible学习笔记.html">ansible学习笔记</a></li>
-<li><a href="centos中的umask.html">centos中的umask</a></li>
-<li><a href="lvs+keepalive.html">lvs+keepalive</a></li>
-<li><a href="使用mailx和openssl发送邮件.html">使用mailx和openssl发送邮件</a></li>
-<li><a href="远程桌面--ssh的x-forwording.html">远程桌面——ssh的X转发</a></li>
-</ul>
+<p>
+1、实操：flume监控本地目录，有新文件产生，就将其数据采集到hdfs。要求：
+</p>
+
+<p>
+（1）、选择正确的source类型，监控的路径名称/home/hadoop/flume/spoolsource
+</p>
+
+<p>
+（2）、channel要求使用file
+channel（若不知道如何用，按照上课讲的方式，查官方文档）
+</p>
+
+<p>
+（3）、sink组件要求
+</p>
+
+<p>
+数据写入hdfs的路径格式为hdfs://node01:8020/spooldir/07-20-2020/1410/
+</p>
+
+<p>
+数据自动根据年月日时分实际情况，写入相应的目录中
+</p>
+
+<p>
+如2020-07-20号14点10分到19分的数据的数据写入目录/spooldir/07-20-2020/1410/；
+</p>
+
+<p>
+2020-07-21号16点20分到29分的数据的数据写入目录/spooldir/07-21-2020/1620/；
+</p>
+
+<p>
+其他时间的数据，写入对应目录
+</p>
+
+<p>
+（4）、hdfs上生成的文件名前缀是“spooldir-”
+</p>
+
+<p>
+（5）、hdfs的文件，每写入1M的数据，就滚动生成一个新的文件
+</p>
+
+<p>
+（6）对hdfs生成的目录及文件列表进行截图，能说明运行成功即可；粘贴到PDF
+</p>
+
+<p>
+创建/kkb/install/apache-flume-1.9.0-bin/conf/spooldir.conf：
+</p>
+
+<pre class="example">
+# Name the components on this agent
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+# Describe the source
+a1.sources.r1.type = spooldir
+a1.sources.r1.spoolDir = /home/hadoop/flume/spoolsource
+# Whether to add a header storing the absolute path filename
+a1.sources.r1.fileHeader = true
+
+# Describe the sink
+a1.sinks.k1.type = hdfs
+a1.sinks.k1.hdfs.path = hdfs://node01:8020/spooldir/%m-%d-%Y/%H%M/
+a1.sinks.k1.hdfs.filePrefix = spooldir-
+a1.sinks.k1.hdfs.round = true
+a1.sinks.k1.hdfs.roundValue = 10
+a1.sinks.k1.hdfs.roundUnit = minute
+a1.sinks.k1.hdfs.rollInterval = 0
+a1.sinks.k1.hdfs.rollSize = 1048576
+a1.sinks.k1.hdfs.rollCount = 0
+a1.sinks.k1.hdfs.batchSize = 1
+a1.sinks.k1.hdfs.useLocalTimeStamp = true
+a1.sinks.k1.hdfs.fileType = DataStream
+
+# Use a channel which buffers events in file
+a1.channels.c1.type = file
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# Bind the source and sink to the channel
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1
+</pre>
+
+<p>
+启动flume：
+</p>
+
+<pre class="example">
+cd /kkb/install/apache-flume-1.9.0-bin
+bin/flume-ng agent -c ./conf -f ./conf/spooldir.conf -n a1 -Dflume.root.logger=INFO,console
+</pre>
+
+<p>
+最后，将不同的文件上传到/home/hadoop/flume/spoolsource/目录下。
+</p>
+
+<p>
+运行结果：
+</p>
+
+
+<div class="figure">
+<p><img src="./20201223-Flume数据采集框架.assets/Snipaste_2020-12-24_19-40-52.png" alt="Snipaste_2020-12-24_19-40-52.png" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="./20201223-Flume数据采集框架.assets/Snipaste_2020-12-24_19-41-43.png" alt="Snipaste_2020-12-24_19-41-43.png" />
+</p>
+</div>
+<p>
+<img src="./20201223-Flume数据采集框架.assets/Snipaste_2020-12-24_19-42-20.png" alt="Snipaste_2020-12-24_19-42-20.png" />
+2、判断题：
+</p>
+
+<p>
+增加agent的source 个数，进而提高source读取数据吞吐量
+</p>
+
+<p>
+对。当输入单个source的数据传输存在瓶颈时，增加source并同时增加输入数据源数量可以提高source读取数据吞吐量。
+</p>
+
+<p>
+3、判断题：
+</p>
+
+<p>
+减小batchSize，适当提高采集频率，可以调高 source 搬运数据到 channel
+的性能
+</p>
+
+<p>
+错。当一段时间内产生的events较少时，减小batchSize适当提高采集频率，可增加source搬运数据到channel的实时性，这种情况下确实可以提高性能；但当极短的时间内产生大量的events时，减小batchSize提高采集频率，会使source搬运数据到channel的次数变得非常频繁，反而降低了性能。
+</p>
 </div>
 </body>
 </html>

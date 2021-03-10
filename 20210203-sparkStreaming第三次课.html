@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-10 周三 16:54 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="css/worg.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<p>
+1、第一题：实现流与静态数据的案例编码开发
+</p>
+
+<p>
+创建maven工程，并导入相关jar包
+</p>
+
+<p>
+pom.xml:
+</p>
+
+<pre class="example">
+&lt;properties&gt;
+    &lt;scala.version&gt;2.11.8&lt;/scala.version&gt;
+    &lt;spark.version&gt;2.3.3&lt;/spark.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.scala-lang&lt;/groupId&gt;
+        &lt;artifactId&gt;scala-library&lt;/artifactId&gt;
+        &lt;version&gt;${scala.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+        &lt;artifactId&gt;spark-streaming_2.11&lt;/artifactId&gt;
+        &lt;version&gt;${spark.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+        &lt;artifactId&gt;spark-streaming-kafka-0-10_2.11&lt;/artifactId&gt;
+        &lt;version&gt;${spark.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+        &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+        &lt;version&gt;1.2.70&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;build&gt;
+    &lt;sourceDirectory&gt;src/main/scala&lt;/sourceDirectory&gt;
+    &lt;testSourceDirectory&gt;src/test/scala&lt;/testSourceDirectory&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;net.alchim31.maven&lt;/groupId&gt;
+            &lt;artifactId&gt;scala-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.2.2&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;compile&lt;/goal&gt;
+                        &lt;goal&gt;testCompile&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;args&gt;
+                            &lt;arg&gt;-dependencyfile&lt;/arg&gt;
+                            &lt;arg&gt;${project.build.directory}/.scala_dependencies&lt;/arg&gt;
+                        &lt;/args&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.4.3&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;phase&gt;package&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;shade&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;filters&gt;
+                            &lt;filter&gt;
+                                &lt;artifact&gt;*:*&lt;/artifact&gt;
+                                &lt;excludes&gt;
+                                    &lt;exclude&gt;META-INF/*.SF&lt;/exclude&gt;
+                                    &lt;exclude&gt;META-INF/*.DSA&lt;/exclude&gt;
+                                    &lt;exclude&gt;META-INF/*.RSA&lt;/exclude&gt;
+                                &lt;/excludes&gt;
+                            &lt;/filter&gt;
+                        &lt;/filters&gt;
+                        &lt;transformers&gt;
+                            &lt;transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"&gt;
+                                &lt;mainClass&gt;&lt;/mainClass&gt;
+                            &lt;/transformer&gt;
+                        &lt;/transformers&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+
+<p>
+构建静态数据，可以以课件当中的静态数据为例
+</p>
+
+<p>
+使用命令进入kafka的生产者终端控制台，并生产json格式的数据
+</p>
+
+<pre class="example">
+bin/kafka-console-producer.sh --broker-list node01:9092,node02:9092,node03:9092 --topic test
+</pre>
+
+<p>
+使用sparkStreaming
+基于0.10版本直连消费模式，消费kafka当中的数据，实现流式数据与静态数据的join操作
+</p>
+
+<p>
+src/main/scala/com/kkb/sparkstreaming:
+</p>
+
+<pre class="example">
+package com.kkb.sparkstreaming
+
+import com.alibaba.fastjson.{JSON, JSONException, JSONObject}
+import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.log4j.{Level, Logger}
+import org.apache.spark.SparkConf
+import org.apache.spark.rdd.RDD
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.dstream.InputDStream
+import org.apache.spark.streaming.kafka010.{CanCommitOffsets, ConsumerStrategies, HasOffsetRanges, KafkaUtils, LocationStrategies, OffsetRange}
+import org.apache.spark.streaming.{Durations, StreamingContext}
+
+case class UserInfo(userID:String,userName:String,userAddress:String)
+
+
+object StreamStaicJoin {
+  def main(args: Array[String]): Unit = {
+    //设置日志等级
+    Logger.getLogger("org").setLevel(Level.WARN)
+    //Kafka 参数
+    val kafkaParams= Map[String, Object](
+      "bootstrap.servers" -&gt; "node01:9092,node02:9092,node03:9092",
+      "key.deserializer" -&gt; classOf[StringDeserializer],
+      "value.deserializer" -&gt; classOf[StringDeserializer],
+      "auto.offset.reset" -&gt; "latest",
+      "enable.auto.commit" -&gt; (false: java.lang.Boolean),
+      "group.id" -&gt; "testGroup")
+    //spark环境
+    val sparkConf = new SparkConf().setAppName(this.getClass.getSimpleName.replace("$","")).setMaster("local[3]")
+    val ssc = new StreamingContext(sparkConf,Durations.seconds(5))
+
+    /** 1) 静态数据: 用户基础信息*/
+    val userInfo=ssc.sparkContext.parallelize(Array(
+      UserInfo("user_1","name_1","address_1"),
+      UserInfo("user_2","name_2","address_2"),
+      UserInfo("user_3","name_3","address_3"),
+      UserInfo("user_4","name_4","address_4"),
+      UserInfo("user_5","name_5","address_5")
+    )).map(item=&gt;(item.userID,item))
+
+    //对RDD数据进行缓存
+    userInfo.persist(StorageLevel.MEMORY_AND_DISK_SER_2)
+    /** 2) 流式数据: 用户发的tweet数据*/
+    /**
+     * 获取kafka当中的流失数据，关于用户的json格式的数据
+     * */
+    val kafkaDStream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](
+      ssc,
+      LocationStrategies.PreferConsistent,
+      ConsumerStrategies.Subscribe[String, String](Set("test"), kafkaParams)
+    )
+    /** 3) 流与静态数据做Join (RDD Join 方式)*/
+    kafkaDStream.foreachRDD(eachRDD =&gt;{
+      val userRDD: RDD[(String, (String, String, String, Integer, Integer))] = eachRDD.map(item =&gt; parseJson(item.value())).map(item =&gt; {
+        val userID = item.getString("userID")
+        val eventTime = item.getString("eventTime")
+        val language = item.getString("language")
+        val favoriteCount = item.getInteger("favoriteCount")
+        val retweetCount = item.getInteger("retweetCount")
+        (userID, (userID, eventTime, language, favoriteCount, retweetCount))
+      })
+      val resultRDD: RDD[(String, ((String, String, String, Integer, Integer), UserInfo))] = userRDD.join(userInfo)
+      resultRDD.foreach(println)
+
+      val offsetRanges: Array[OffsetRange] = eachRDD.asInstanceOf[HasOffsetRanges].offsetRanges
+      kafkaDStream.asInstanceOf[CanCommitOffsets].commitAsync(offsetRanges)
+    })
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  /** json解析 */
+  def parseJson(log:String):JSONObject={
+    var ret:JSONObject=null
+    try{
+      ret=JSON.parseObject(log)
+    }catch {
+      //异常json数据处理
+      case e:JSONException =&gt; println(log)
+    }
+    ret
+  }
+}
+</pre>
+
+<p>
+生产者产生json格式的输入流，截图：
+</p>
+
+<p>
+<img src="./20210203-sparkStreaming第三次课.assets/屏幕截图%202021-02-05%20002510.png" alt="屏幕截图%202021-02-05%20002510.png" />
+将join之后的结果打印到控制台，截图：
+</p>
+
+<p>
+<img src="./20210203-sparkStreaming第三次课.assets/屏幕截图%202021-02-05%20002607.png" alt="屏幕截图%202021-02-05%20002607.png" />
+2、第二题：简述sparkStreaming整合kafka0.8以及0.10版本的区别
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><a href="https://spark.apache.org/docs/2.2.0/streaming-kafka-0-8-integration.html">spark-streaming-kafka-0-8</a></th>
+<th scope="col" class="org-left"><a href="https://spark.apache.org/docs/2.2.0/streaming-kafka-0-10-integration.html">spark-streaming-kafka-0-10</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Broker Version</td>
+<td class="org-left">0.8.2.1 or higher</td>
+<td class="org-left">0.10.0 or higher</td>
+</tr>
+
+<tr>
+<td class="org-left">Api Stability</td>
+<td class="org-left">Stable</td>
+<td class="org-left">Experimental</td>
+</tr>
+
+<tr>
+<td class="org-left">Language Support</td>
+<td class="org-left">Scala, Java, Python</td>
+<td class="org-left">Scala, Java</td>
+</tr>
+
+<tr>
+<td class="org-left">Receiver DStream</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+</tr>
+
+<tr>
+<td class="org-left">Direct DStream</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">SSL / TLS Support</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">Offset Commit Api</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">Dynamic Topic Subscription</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<a href="https://spark.apache.org/docs/2.2.0/streaming-kafka-integration.html">https://spark.apache.org/docs/2.2.0/streaming-kafka-integration.html</a>
+</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-10 周三 16:53 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="css/worg.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<p>
+简答：YARN中有几种调度器？使用FairScheduler自定义队列大概经过几步？
+</p>
+
+<p>
+目前YARN总共有三种调度器：
+</p>
+
+<ol class="org-ol">
+<li>先进先出调度器（FIFO）</li>
+<li>容量调度器（Capacity Scheduler）</li>
+<li>公平调度器（Fair Scheduler）</li>
+</ol>
+
+<p>
+使用FairScheduler自定义队列步驟：
+</p>
+
+<ol class="org-ol">
+<li>修改yarn-site.xml，插入：</li>
+</ol>
+
+<p>
+vim /kkb/install/hadoop-3.1.4/etc/hadoop/yarn-site.xml
+</p>
+
+<pre class="example">
+&lt;!--  指定我们的任务调度使用fairScheduler调度器  --&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.resourcemanager.scheduler.class&lt;/name&gt;
+    &lt;value&gt;org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;!--  指定我们的任务调度的配置文件路径  --&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.scheduler.fair.allocation.file&lt;/name&gt;
+    &lt;value&gt;/kkb/install/hadoop-3.1.4/etc/hadoop/fair-scheduler.xml&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;!-- 是否启用资源抢占，如果启用，那么当该队列资源使用
+yarn.scheduler.fair.preemption.cluster-utilization-threshold 这么多比例的时候，就从其他空闲队列抢占资源
+  --&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.scheduler.fair.preemption&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.scheduler.fair.preemption.cluster-utilization-threshold&lt;/name&gt;
+    &lt;value&gt;0.8f&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;!-- 设置为true，且没有指定队列名，提交应用到用户名同名的队列；如果设置为false或没设置，默认提交到default队列；如果在allocation文件中指定了队列提交策略，忽略此属性  --&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.scheduler.fair.user-as-default-queue&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+    &lt;description&gt;default is True&lt;/description&gt;
+&lt;/property&gt;
+
+&lt;!-- 是否允许在提交应用时，创建队列；如果设置为true，则允许；如果设置为false，如果要将应用提交的队列，没有在allocation文件中指定，那么则将应用提交到default队列；默认为true，如果队列防止策略在allocation文件定义过，那么忽略此属性  --&gt;
+&lt;property&gt;
+    &lt;name&gt;yarn.scheduler.fair.allow-undeclared-pools&lt;/name&gt;
+    &lt;value&gt;false&lt;/value&gt;
+    &lt;description&gt;default is True&lt;/description&gt;
+&lt;/property&gt;
+</pre>
+
+<ol class="org-ol">
+<li>添加fair-scheduler.xml配置文件：</li>
+</ol>
+
+<p>
+vim /kkb/install/hadoop-3.1.4/etc/hadoop/fair-scheduler.xml
+</p>
+
+<pre class="example">
+&lt;?xml version="1.0"?&gt;
+&lt;allocations&gt;
+    &lt;!-- 每个队列中，app的默认调度策略，默认值是fair --&gt;
+    &lt;defaultQueueSchedulingPolicy&gt;fair&lt;/defaultQueueSchedulingPolicy&gt;
+
+    &lt;user name="hadoop"&gt;
+        &lt;!-- 用户hadoop最多运行的app个数 --&gt;
+        &lt;maxRunningApps&gt;30&lt;/maxRunningApps&gt;
+    &lt;/user&gt;
+    &lt;!-- 如果用户没有设置最多运行的app个数，那么用户默认运行10个 --&gt;
+    &lt;userMaxAppsDefault&gt;10&lt;/userMaxAppsDefault&gt;
+
+    &lt;!-- 定义我们的队列  --&gt;
+    &lt;!-- 
+    weight
+    资源池权重
+
+    aclSubmitApps
+    允许提交任务的用户名和组；
+    格式为：“user1,user2 group1,group2” 或 “ group1,group2” -》如果只有组，那么组名前要加个空格
+    如果提交应用的用户或所属组在队列的ACLs中，或在当前队列的父队列的ACLs中，那么此用户有权限提交应用到此队列
+    下例：
+        xiaoli有权限提交应用到队列a；xiaofan在队列a的父队列dev的acls中，所以xiaofan也有权限提交应用到队列a
+        比如有队列层级root.dev.a；
+        有定义
+        &lt;queue name="dev"&gt;
+            ...
+            &lt;aclSubmitApps&gt;xiaofan&lt;/aclSubmitApps&gt;
+            ...
+            &lt;queue name="a"&gt;
+                ...
+                &lt;aclSubmitApps&gt;xiaoli&lt;/aclSubmitApps&gt;
+            &lt;/queue&gt;
+        &lt;/queue&gt;
+
+    aclAdministerApps
+    允许管理任务的用户名和组；
+    格式同上。
+     --&gt;
+    &lt;queue name="root"&gt;
+        &lt;minResources&gt;512mb,4vcores&lt;/minResources&gt;
+        &lt;maxResources&gt;102400mb,100vcores&lt;/maxResources&gt;
+        &lt;maxRunningApps&gt;100&lt;/maxRunningApps&gt;
+        &lt;weight&gt;1.0&lt;/weight&gt;
+        &lt;schedulingMode&gt;fair&lt;/schedulingMode&gt;
+        &lt;aclSubmitApps&gt; &lt;/aclSubmitApps&gt;
+        &lt;aclAdministerApps&gt; &lt;/aclAdministerApps&gt;
+
+        &lt;queue name="default"&gt;
+            &lt;minResources&gt;512mb,4vcores&lt;/minResources&gt;
+            &lt;maxResources&gt;30720mb,30vcores&lt;/maxResources&gt;
+            &lt;maxRunningApps&gt;100&lt;/maxRunningApps&gt;
+            &lt;schedulingMode&gt;fair&lt;/schedulingMode&gt;
+            &lt;weight&gt;1.0&lt;/weight&gt;
+            &lt;!--  所有的任务如果不指定任务队列，都提交到default队列里面来 --&gt;
+            &lt;aclSubmitApps&gt;*&lt;/aclSubmitApps&gt;
+        &lt;/queue&gt;
+
+        &lt;queue name="hadoop"&gt;
+            &lt;minResources&gt;512mb,4vcores&lt;/minResources&gt;
+            &lt;maxResources&gt;20480mb,20vcores&lt;/maxResources&gt;
+            &lt;maxRunningApps&gt;100&lt;/maxRunningApps&gt;
+            &lt;schedulingMode&gt;fair&lt;/schedulingMode&gt;
+            &lt;weight&gt;2.0&lt;/weight&gt;
+            &lt;aclSubmitApps&gt;hadoop hadoop&lt;/aclSubmitApps&gt;
+            &lt;aclAdministerApps&gt;hadoop hadoop&lt;/aclAdministerApps&gt;
+        &lt;/queue&gt;
+
+        &lt;queue name="develop"&gt;
+            &lt;minResources&gt;512mb,4vcores&lt;/minResources&gt;
+            &lt;maxResources&gt;20480mb,20vcores&lt;/maxResources&gt;
+            &lt;maxRunningApps&gt;100&lt;/maxRunningApps&gt;
+            &lt;schedulingMode&gt;fair&lt;/schedulingMode&gt;
+            &lt;weight&gt;1&lt;/weight&gt;
+            &lt;aclSubmitApps&gt;develop develop&lt;/aclSubmitApps&gt;
+            &lt;aclAdministerApps&gt;develop develop&lt;/aclAdministerApps&gt;
+        &lt;/queue&gt;
+
+        &lt;queue name="test1"&gt;
+            &lt;minResources&gt;512mb,4vcores&lt;/minResources&gt;
+            &lt;maxResources&gt;20480mb,20vcores&lt;/maxResources&gt;
+            &lt;maxRunningApps&gt;100&lt;/maxRunningApps&gt;
+            &lt;schedulingMode&gt;fair&lt;/schedulingMode&gt;
+            &lt;weight&gt;1.5&lt;/weight&gt;
+            &lt;aclSubmitApps&gt;test1,hadoop,develop test1&lt;/aclSubmitApps&gt;
+            &lt;aclAdministerApps&gt;test1 group_businessC,supergroup&lt;/aclAdministerApps&gt;
+        &lt;/queue&gt;
+    &lt;/queue&gt;
+    &lt;!-- 
+        包含一系列的rule元素；这些rule元素用来告诉scheduler调度器，进来的app按照规则提交到哪个队列中
+        有多个rule的话，会从上到下进行匹配；
+        rule可能会带有argument；所有的rule都带有create argument，表示当前rule是否能够创建一个新队列；默认值是true
+        如果rule的create设置为false，且在allocation中没有配置此队列，那么尝试匹配下一个rule
+    --&gt;
+    &lt;queuePlacementPolicy&gt;
+        &lt;!-- app被提交到指定的队列；create为true，则创建；若为false，如果队列不存在，则不创建 --&gt;
+        &lt;rule name="specified" create="false"/&gt;
+        &lt;!-- app被提交到提交此app的用户所属组的组名命名的队列；如果队列不存在，则不创建 --&gt;
+        &lt;rule name="primaryGroup" create="false" /&gt;
+        &lt;!-- 如果上边的rule都没有匹配上，则app提交到queue指定的的队列；如果没有指定queue值，默认值是root.default --&gt;
+        &lt;rule name="default" queue="root.default"/&gt;
+    &lt;/queuePlacementPolicy&gt;
+&lt;/allocations&gt;
+</pre>
+
+<ol class="org-ol">
+<li>配置文件分发</li>
+</ol>
+
+<pre class="example">
+cd /kkb/install/hadoop-3.1.4/etc/hadoop
+scp yarn-site.xml  fair-scheduler.xml node02:$PWD
+scp yarn-site.xml  fair-scheduler.xml node03:$PWD
+</pre>
+
+<ol class="org-ol">
+<li>重启yarn集群</li>
+</ol>
+
+<pre class="example">
+cd /kkb/install/hadoop-3.1.4/
+sbin/stop-yarn.sh
+sbin/start-yarn.sh
+</pre>
+
+<ol class="org-ol">
+<li>java代码中指定队列</li>
+</ol>
+
+<pre class="example">
+public static void main(String[] args) throws Exception {
+
+    Configuration configuration = new Configuration();
+    configuration.set("mapreduce.job.queuename", "hadoop");
+
+    int run = ToolRunner.run(new Configuration(), new GroupMain(), args);
+    System.exit(run);
+}
+</pre>
+
+<ol class="org-ol">
+<li>maven打包编译</li>
+</ol>
+
+<pre class="example">
+mvn clean package
+</pre>
+
+<ol class="org-ol">
+<li>上传jar包到hadoop集群所在服务器，并提交mr作业</li>
+</ol>
+
+<pre class="example">
+yarn jar day02_demo5-1.0-SNAPSHOT.jar com.kkb.mr.demo5.GroupMain
+</pre>
+
+
+<div class="figure">
+<p><img src="./20201207-YARN资源调度框架&amp;Hadoop调优.assets/Snipaste_2020-12-08_23-47-35.png" alt="Snipaste_2020-12-08_23-47-35.png" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="./20201207-YARN资源调度框架&amp;Hadoop调优.assets/Snipaste_2020-12-08_23-46-56.png" alt="Snipaste_2020-12-08_23-46-56.png" />
+</p>
+</div>
+</div>
+</body>
+</html>

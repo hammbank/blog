@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-10 周三 16:54 -->
+<!-- 2021-03-10 周三 16:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>hammbank's blog</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -239,48 +239,231 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">hammbank's blog</h1>
-<ul class="org-ul">
-<li><a href="20201130-HDFS分布式文件系统.html">20201130-HDFS分布式文件系统</a></li>
-<li><a href="20201202-MapReduce计算框架初探.html">20201202-MapReduce计算框架初探</a></li>
-<li><a href="20201204-MapReduce计算框架高级编程及核心原理.html">20201204-MapReduce计算框架高级编程及核心原理</a></li>
-<li><a href="20201207-YARN资源调度框架&amp;Hadoop调优.html">20201207-YARN资源调度框架&amp;Hadoop调优</a></li>
-<li><a href="20201209-hive数仓工具入门.html">20201209-hive数仓工具入门</a></li>
-<li><a href="20201211-hive数仓工具应用.html">20201211-hive数仓工具应用</a></li>
-<li><a href="20201214-hive企业级调优.html">20201214-hive企业级调优</a></li>
-<li><a href="20201216-HBaseNoSQL数据库快速入门.html">20201216-HBaseNoSQL数据库快速入门</a></li>
-<li><a href="20201218-HBase核心原理.html">20201218-HBase核心原理</a></li>
-<li><a href="20201221-HBase高级应用.html">20201221-HBase高级应用</a></li>
-<li><a href="20201223-Flume数据采集框架.html">20201223-Flume数据采集框架</a></li>
-<li><a href="20201225-数据仓库第一次课.html">20201225-数据仓库第一次课</a></li>
-<li><a href="20201228-数据仓库第二次课.html">20201228-数据仓库第二次课</a></li>
-<li><a href="20201230-数据仓库第三次课.html">20201230-数据仓库第三次课</a></li>
-<li><a href="20210104-数据仓库第四次课.html">20210104-数据仓库第四次课</a></li>
-<li><a href="20210106-数据仓库第五次课.html">20210106-数据仓库第五次课</a></li>
-<li><a href="20210108-scala第一次课.html">20210108-scala第一次课</a></li>
-<li><a href="20210111-scala第二次课.html">20210111-scala第二次课</a></li>
-<li><a href="20210113-sparkCore第一次课.html">20210113-sparkCore第一次课</a></li>
-<li><a href="20210115-sparkCore第二次课.html">20210115-sparkCore第二次课</a></li>
-<li><a href="20210118-sparkCore第三次课.html">20210118-sparkCore第三次课</a></li>
-<li><a href="20210120-sparkSql第一次课.html">20210120-sparkSql第一次课</a></li>
-<li><a href="20210122-sparkSql第二次课.html">20210122-sparkSql第二次课</a></li>
-<li><a href="20210125-kafka第一次课.html">20210125-kafka第一次课</a></li>
-<li><a href="20210127-kafka第二次课.html">20210127-kafka第二次课</a></li>
-<li><a href="20210129-sparkStreaming第一次课.html">20210129-sparkStreaming第一次课</a></li>
-<li><a href="20210201-sparkStreaming第二次课.html">20210201-sparkStreaming第二次课</a></li>
-<li><a href="20210203-sparkStreaming第三次课.html">20210203-sparkStreaming第三次课</a></li>
-<li><a href="20210224-Flink第一次课.html">20210224-Flink第一次课</a></li>
-<li><a href="20210226-Flink第二次课.html">20210226-Flink第二次课</a></li>
-<li><a href="ELK部署手册.html">ELK部署手册</a></li>
-<li><a href="ansible学习笔记.html">ansible学习笔记</a></li>
-<li><a href="centos中的umask.html">centos中的umask</a></li>
-<li><a href="lvs+keepalive.html">lvs+keepalive</a></li>
-<li><a href="使用mailx和openssl发送邮件.html">使用mailx和openssl发送邮件</a></li>
-<li><a href="远程桌面--ssh的x-forwording.html">远程桌面——ssh的X转发</a></li>
-</ul>
+<p>
+一、描述windows本地开发环境如何配置？并完成配置
+</p>
+
+<p>
+修改C:\Windows\System32\drivers\etc\hosts文件，增加：
+</p>
+
+<pre class="example">
+192.168.111.131 node01.kaikeba.com node01
+192.168.111.132 node02.kaikeba.com node02
+192.168.111.133 node03.kaikeba.com node03
+</pre>
+
+<p>
+安装jdk8：
+</p>
+
+<p>
+安装时需要注意安装路径不要带空格。安装完成后添加JAVA\<sub>HOME环境变量</sub>，然后PATH增加$JAVA<sub>HOME</sub>$/bin
+</p>
+
+<p>
+windows下hadoop环境配置：
+</p>
+
+<p>
+安装时需要注意安装路径不要带空格。安装完成后用课件中的bin覆盖，主要增加了winutils.exe和hadoop.dll，并把hadoop.dll复制到C:\Windows\System32下。然后添加HADOOP\<sub>HOME环境变量</sub>，增加$HADOOP<sub>HOME</sub>$/bin和$HADOOP<sub>HOME</sub>$/sbin。最后替换$HADOOP<sub>HOME</sub>$/bin和$HADOOP<sub>HOME</sub>$/sbin中的*.cmd文件的unix换行符，使之变为windows换行符。
+</p>
+
+<p>
+关于安装maven：
+</p>
+
+<p>
+由于当前最新版的idea集成maven3.6.3和maven插件，该步骤可以省略。
+</p>
+
+<p>
+安装idea（使用免费社区版）：
+</p>
+
+<p>
+一路下一步完成安装
+</p>
+
+<p>
+idea配置maven：
+</p>
+
+<p>
+由于上一步使用idea自带的maven，一般不需要额外配置。但为提升下载速度，可以添加maven的阿里云镜像，C:\Program Files\JetBrains\IntelliJ IDEA
+Community Edition 2020.2.4\plugins\maven\lib\maven3\conf\settings.xml：
+</p>
+
+<pre class="example">
+&lt;settings&gt;
+  &lt;mirrors&gt;
+    &lt;mirror&gt;
+      &lt;id&gt;aliyunmaven&lt;/id&gt;
+      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
+      &lt;name&gt;阿里云公共仓库&lt;/name&gt;
+      &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt;
+    &lt;/mirror&gt;
+  &lt;/mirrors&gt;
+&lt;/settings&gt;
+</pre>
+
+<p>
+二、在idea中，新建maven工程，编程实现创建hdfs的/kkb/目录；并上传文件a.txt到此目录：
+</p>
+
+<p>
+pom.xml中增加:
+</p>
+
+<pre class="example">
+&lt;properties&gt;
+    &lt;hadoop.version&gt;3.1.4&lt;/hadoop.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-client&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-common&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-hdfs&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-mapreduce-client-core&lt;/artifactId&gt;
+        &lt;version&gt;${hadoop.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- https://mvnrepository.com/artifact/junit/junit --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;4.11&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.testng&lt;/groupId&gt;
+        &lt;artifactId&gt;testng&lt;/artifactId&gt;
+        &lt;version&gt;RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+        &lt;version&gt;1.2.17&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.0&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;1.8&lt;/source&gt;
+                &lt;target&gt;1.8&lt;/target&gt;
+                &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                &lt;!--   &lt;verbal&gt;true&lt;/verbal&gt;--&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.4.3&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;phase&gt;package&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;shade&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;minimizeJar&gt;true&lt;/minimizeJar&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+
+<p>
+java代码：
+</p>
+
+<pre class="example">
+package com.kkb;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class HDFSDemo {
+    @Test
+    public void mkDirOnHDFS() throws IOException {
+        Configuration configuration = new Configuration();
+        configuration.set("fs.defaultFS", "hdfs://node01:8020");
+        FileSystem fileSystem = FileSystem.get(configuration);
+        boolean mkdirs = fileSystem.mkdirs(new Path("/kkb"));
+        fileSystem.close();
+    }
+
+    @Test
+    public void uploadFile() throws URISyntaxException, IOException, InterruptedException {
+        Configuration configuration = new Configuration();
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://node01:8020"),configuration,"hadoop");
+        fileSystem.copyFromLocalFile(new Path("file:///C:\\my_stuff\\kkb\\作业\\20201130\\3、数据\\smallfile\\a.txt"), new Path("/kkb"));
+        fileSystem.close();
+    }
+}
+</pre>
+
+<p>
+查看确认hdfs中的/kkb目录是否已创建和a.txt文件是否上传成功：
+</p>
+
+
+<div class="figure">
+<p><img src="./20201130-HDFS分布式文件系统.assets/20201202101644.png" alt="20201202101644.png" />
+</p>
+</div>
 </div>
 </body>
 </html>
